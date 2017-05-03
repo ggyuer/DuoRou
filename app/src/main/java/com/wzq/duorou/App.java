@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class App extends Application {
 
-    private static Context context;
+    public static Context context;
     private static App instance;
     // login user name
     public final String PREF_USERNAME = "username";
@@ -29,7 +29,7 @@ public class App extends Application {
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
-        context = getApplicationContext();
+        context = this;
 
         Logger.init("hhh")
                 .methodOffset(2)

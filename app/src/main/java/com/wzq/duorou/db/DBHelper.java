@@ -16,8 +16,8 @@ import com.wzq.duorou.mvp.modle.NewsDao;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DBNAME = "djk";
-    public static final int version = 1;
+    public static final String DBNAME = "ghgh";
+    public static final int version = 6;
     public static final String CACHE = "cache";
     public static final String ID = "_id";
     public static final String URL = "url";
@@ -97,15 +97,15 @@ public class DBHelper extends SQLiteOpenHelper {
             + DisturbDao.TABLE_NAME + " ("
             + DisturbDao.USER_ID + " TEXT PRIMARY KEY);";
 
+    private DBHelper(Context context) {
+        super(context, DBNAME, null, DATABASE_VERSION);
+    }
+
     public static DBHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DBHelper(context.getApplicationContext());
         }
         return instance;
-    }
-
-    public DBHelper(Context context) {
-        super(context, DBNAME, null, version);
     }
 
     @Override

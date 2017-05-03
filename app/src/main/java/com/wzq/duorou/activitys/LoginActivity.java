@@ -146,7 +146,6 @@ public class LoginActivity extends BaseActivity {
 
         // reset current user name before login
 		MyHelper.getInstance().setCurrentUserName(currentUsername);
-        PreferenceManager.getInstance().setValueToPrefrences(Constant.USER_HX_ID,"");
 		final long start = System.currentTimeMillis();
 		// call login method
 		Log.d(TAG, "EMClient.getInstance().login");

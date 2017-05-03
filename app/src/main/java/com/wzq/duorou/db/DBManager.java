@@ -321,14 +321,14 @@ public class DBManager {
      *
      * @param from
      */
-    synchronized public void deleteMessage(String from) {
+    public void deleteMessage(String from) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             db.delete(InviteMessgeDao.TABLE_NAME, InviteMessgeDao.COLUMN_NAME_FROM + " = ?", new String[]{from});
         }
     }
 
-    public synchronized int getUnreadNotifyCount() {
+    public int getUnreadNotifyCount() {
         int count = 0;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         if (db.isOpen()) {
@@ -341,7 +341,7 @@ public class DBManager {
         return count;
     }
 
-    public synchronized void setUnreadNotifyCount(int count) {
+    public void setUnreadNotifyCount(int count) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             ContentValues values = new ContentValues();
@@ -351,7 +351,7 @@ public class DBManager {
         }
     }
 
-    synchronized public void closeDB() {
+    public void closeDB() {
         if (dbHelper != null) {
             dbHelper.closeDB();
         }
@@ -362,7 +362,7 @@ public class DBManager {
     /**
      * Save Robot list
      */
-    synchronized public void saveRobotList(List<RobotUser> robotList) {
+    public void saveRobotList(List<RobotUser> robotList) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             db.delete(UserDao.ROBOT_TABLE_NAME, null, null);

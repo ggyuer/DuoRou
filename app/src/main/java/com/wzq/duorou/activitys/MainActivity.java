@@ -272,15 +272,13 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
 
-    private InviteMessgeDao inviteMessgeDao;
+    private InviteMessgeDao  inviteMessgeDao = new InviteMessgeDao(this);
 
     public void chatAbout() {
         unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
         showExceptionDialogFromIntent(getIntent());
-        inviteMessgeDao = new InviteMessgeDao(this);
         registerBroadcastReceiver();
-
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
     }
 

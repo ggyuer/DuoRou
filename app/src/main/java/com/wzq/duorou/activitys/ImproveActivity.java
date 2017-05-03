@@ -141,6 +141,7 @@ public class ImproveActivity extends MyBaseActivity implements View.OnClickListe
                             Toast.makeText(ImproveActivity.this, getString(R.string.toast_updatenick_fail), Toast.LENGTH_SHORT)
                                     .show();
                             dialog.dismiss();
+                            pd.dismiss();
                         }
                     });
                 } else {
@@ -148,6 +149,7 @@ public class ImproveActivity extends MyBaseActivity implements View.OnClickListe
                         @Override
                         public void run() {
                             dialog.dismiss();
+                            pd.dismiss();
                             Toast.makeText(ImproveActivity.this, getString(R.string.toast_updatenick_success), Toast.LENGTH_SHORT)
                                     .show();
                            PreferenceManager.getInstance().setValueToPrefrences(Constant.USER_NICK_NAME,"");

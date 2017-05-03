@@ -21,7 +21,7 @@ public class ConversationImpl implements ConversationPresenter {
     private Context context;
     private boolean flag;
     public ConversationImpl(Context context, IConversationView iConversationView) {
-        topUserDao = new TopUserDaoImpl(context);
+        //topUserDao = new TopUserDaoImpl(context);
         this.context = context;
         this.iConversationView = iConversationView;
     }
