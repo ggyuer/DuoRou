@@ -21,11 +21,11 @@ import com.hyphenate.chat.EMGroup;
 import com.hyphenate.exceptions.HyphenateException;
 import com.wzq.duorou.Constant;
 import com.wzq.duorou.R;
-import com.wzq.duorou.chat.view.activity.GroupsActivity;
-import com.wzq.duorou.chat.view.activity.NewGroupActivity;
 import com.wzq.duorou.adapter.GroupAdapter;
 import com.wzq.duorou.base.BaseFragment;
 import com.wzq.duorou.chat.view.activity.ChatActivity;
+import com.wzq.duorou.chat.view.activity.GroupsActivity;
+import com.wzq.duorou.chat.view.activity.NewGroupActivity;
 
 import java.util.List;
 
@@ -130,15 +130,12 @@ public class GroupsFragment extends BaseFragment {
                 if (position == 1) {
                     // create a new group
                     startActivityForResult(new Intent(getActivity(), NewGroupActivity.class), 0);
-                } else if (position == 2) {
-                    // join a public group
-                    //startActivityForResult(new Intent(GroupsActivity.this, PublicGroupsActivity.class), 0);
                 } else {
                     // enter group chat
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
                     // it is group chat
                     intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
-                    intent.putExtra("userId", groupAdapter.getItem(position - 3).getGroupId());
+                    intent.putExtra("userId", groupAdapter.getItem(position - 2).getGroupId());
                     startActivityForResult(intent, 0);
                 }
             }

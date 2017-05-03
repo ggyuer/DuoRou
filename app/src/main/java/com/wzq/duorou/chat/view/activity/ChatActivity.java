@@ -3,6 +3,7 @@ package com.wzq.duorou.chat.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 
 
@@ -34,7 +35,13 @@ public class ChatActivity extends MyBaseActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
         
     }
-    
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        finish();
+        return true;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

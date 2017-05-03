@@ -4,7 +4,13 @@ import android.content.Context;
 
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
+import com.wzq.duorou.beans.Disturb;
 import com.wzq.duorou.beans.RobotUser;
+import com.wzq.duorou.beans.TopUser;
+import com.wzq.duorou.chat.impl.DisturbDaoImpl;
+import com.wzq.duorou.chat.impl.TopUserDaoImpl;
+import com.wzq.duorou.chat.model.DisturbDao;
+import com.wzq.duorou.chat.model.TopUserDao;
 import com.wzq.duorou.chat.model.UserDao;
 import com.wzq.duorou.utils.PreferenceManager;
 
@@ -299,5 +305,46 @@ public class MyModel {
         SpakerOn,
         DisabledGroups,
         DisabledIds
+    }
+
+    /**
+     * 从数据库获取置顶消息
+     * @return
+     */
+    public Map<String,TopUser> getTopUserList(){
+        TopUserDao dao = new TopUserDaoImpl(context);
+        return dao.getTopUserList();
+    }
+
+    public long saveTopUser(TopUser user){
+        TopUserDao dao = new TopUserDaoImpl(context);
+        return dao.saveTopUser(user);
+    }
+
+    public int deleteTopUser(String userName){
+        TopUserDao dao = new TopUserDaoImpl(context);
+        return dao.deleteTopUser(userName);
+    }
+
+    /****************Disturb相关********************/
+
+    public Map<String,Disturb> getDisturbList(){
+        DisturbDao disturbDao = new DisturbDaoImpl(context);
+        return disturbDao.getDisturbList();
+    }
+
+    public boolean saveDisturbList(List<Disturb> disturbs){
+        DisturbDao disturbDao = new DisturbDaoImpl(context);
+        return disturbDao.saveDisturbList(disturbs);
+    }
+
+    public long saveDisturb(Disturb disturb){
+        DisturbDao disturbDao = new DisturbDaoImpl(context);
+        return disturbDao.saveDisturb(disturb);
+    }
+
+    public long deleteDisturb(String userId){
+        DisturbDao disturbDao = new DisturbDaoImpl(context);
+        return disturbDao.deleteDisturb(userId);
     }
 }

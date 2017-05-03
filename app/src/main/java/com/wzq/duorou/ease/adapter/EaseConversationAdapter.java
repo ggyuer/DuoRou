@@ -49,26 +49,38 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     protected int primarySize;
     protected int secondarySize;
     protected float timeSize;
-
+    protected List<EMConversation> top_list = new ArrayList<>();
     public EaseConversationAdapter(Context context, int resource,
                                    List<EMConversation> objects) {
+        this(context, resource, objects, null);
+        conversationList = objects;
+        copyConversationList = new ArrayList<EMConversation>();
+        copyConversationList.addAll(objects);
+
+    }
+
+    public EaseConversationAdapter(Context context, int resource,
+                                   List<EMConversation> objects,
+                                   List<EMConversation> top_list) {
         super(context, resource, objects);
         conversationList = objects;
         copyConversationList = new ArrayList<EMConversation>();
         copyConversationList.addAll(objects);
+        this.top_list = top_list;
     }
 
     @Override
     public int getCount() {
-        return conversationList.size();
+        return conversationList.size() + top_list.size();
     }
 
     @Override
     public EMConversation getItem(int arg0) {
-        if (arg0 < conversationList.size()) {
-            return conversationList.get(arg0);
+        if (arg0 < top_list.size()) {
+            return top_list.get(arg0);
+        } else {
+            return conversationList.get(arg0 - top_list.size());
         }
-        return null;
     }
 
     @Override

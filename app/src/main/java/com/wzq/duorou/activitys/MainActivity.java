@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -19,8 +18,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -38,10 +37,8 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.EMLog;
-import com.mikepenz.foundation_icons_typeface_library.FoundationIcons;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
-import com.squareup.picasso.Picasso;
 import com.wzq.duorou.Constant;
 import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
@@ -79,11 +76,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import me.xiaopan.android.preference.PreferencesUtils;
 
 public class MainActivity extends BaseActivity implements ColorChooserDialog.ColorCallback {
-
 
     @Bind(R.id.avatar)
     ImageView mAvatar;
@@ -143,7 +138,28 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
 
     private ContactListFragment contactListFragment;
     private ConversationListFragment conversationListFragment;
+    private long mExitTime = 0;
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private long clickTime = 0; //记录第一次点击的时间
+
+    private void exit() {
+        if ((System.currentTimeMillis() - clickTime) > 2000) {
+            Toast.makeText(MainActivity.this, "再按一次后退键退出程序", Toast.LENGTH_SHORT).show();
+            clickTime = System.currentTimeMillis();
+        } else {
+            this.finish();
+            System.exit(0);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -171,7 +187,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         chatAbout();
-        Log.e("TAG",PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_AVATAR, "")+"0");
+        Log.e("TAG", PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_AVATAR, "") + "0");
         fragmentManager = getSupportFragmentManager();
         contactListFragment = new ContactListFragment();
         conversationListFragment = new ConversationListFragment();
@@ -183,8 +199,8 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
             mStatusBar.setVisibility(View.GONE);
         }
 
-        String username = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID,"");
-        EaseUserUtils.setUserAvatar(this,username,mAvatar);
+        String username = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID, "");
+        EaseUserUtils.setUserAvatar(this, username, mAvatar);
 
         mDesc.setText("如果事情才刚开始你就胆怯，你还有什么理由继续......");
 
@@ -285,10 +301,10 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         switch (view.getId()) {
             case R.id.avatar:
                 Intent intent = UserProfileActivity.newInstance(this);
-                intent.putExtra("title","我的信息");
-                intent.putExtra("username", PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID,""));
-                intent.putExtra("setting",true);
-                startActivityForResult(intent,1001);
+                intent.putExtra("title", "我的信息");
+                intent.putExtra("username", PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID, ""));
+                intent.putExtra("setting", true);
+                startActivityForResult(intent, 1001);
                 break;
             case R.id.main_home:
                 mResideLayout.closePane();

@@ -1,13 +1,18 @@
 package com.wzq.duorou.chat.view.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,15 +27,22 @@ import com.hyphenate.util.NetUtils;
 import com.wzq.duorou.Constant;
 import com.wzq.duorou.R;
 import com.wzq.duorou.activitys.MainActivity;
+import com.wzq.duorou.beans.TopUser;
 import com.wzq.duorou.chat.model.InviteMessgeDao;
+import com.wzq.duorou.chat.presenter.ConversationImpl;
+import com.wzq.duorou.chat.presenter.ConversationPresenter;
+import com.wzq.duorou.chat.view.IConversationView;
 import com.wzq.duorou.chat.view.activity.ChatActivity;
 import com.wzq.duorou.ease.ui.EaseConversationListFragment;
 import com.wzq.duorou.ease.widget.EaseConversationList;
 
-public class ConversationListFragment extends EaseConversationListFragment {
+import java.util.HashMap;
+import java.util.Map;
+
+public class ConversationListFragment extends EaseConversationListFragment implements IConversationView{
 
     private TextView errorText;
-
+    private ConversationPresenter presenter = new ConversationImpl(getActivity(),this);
     @Override
     protected void initView() {
         super.initView();
@@ -78,6 +90,15 @@ public class ConversationListFragment extends EaseConversationListFragment {
                 return null;
             }
         });
+
+        conversationListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showMenuDialog(position);
+                return true;
+            }
+        });
+
         super.setUpView();
         //end of red packet code
     }
@@ -126,6 +147,91 @@ public class ConversationListFragment extends EaseConversationListFragment {
         // update unread count
         //((MainActivity) getActivity()).updateUnreadLabel();
         return true;
+    }
+
+    private AlertDialog dialog;
+
+    private void showMenuDialog(final int i) {
+        final EMConversation tobeDeleteCons = conversationListView.getItem(i);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+        View view = layoutInflater.inflate(R.layout.chat_long_click_dialog, null);
+        Button delete1 = (Button) view.findViewById(R.id.top);
+        Button delete2 = (Button) view.findViewById(R.id.center);
+        Button top = (Button) view.findViewById(R.id.bottom);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
+        //设置对话框位子
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.getWindow().setAttributes(params);
+        dialog.setCanceledOnTouchOutside(true);
+        if (topMap.containsKey(tobeDeleteCons.getExtField())) {
+            top.setText("取消置顶");
+        } else {
+            top.setText("置顶聊天");
+        }
+
+        delete1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.delConversation(tobeDeleteCons.conversationId(), true);
+            }
+        });
+
+        delete2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.delConversation(tobeDeleteCons.conversationId(), false);
+            }
+        });
+
+        top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (topMap.containsKey(tobeDeleteCons.getExtField())) {
+                    topMap.remove(tobeDeleteCons.getExtField());
+                    presenter.delTopConversation(tobeDeleteCons.getExtField());
+                } else {
+                    TopUser user = new TopUser();
+                    user.setTime(System.currentTimeMillis());
+                    tobeDeleteCons.setExtField(tobeDeleteCons.conversationId());
+                    user.setUserName(tobeDeleteCons.getExtField());
+                    Map<String, TopUser> map = new HashMap<>();
+                    map.put(tobeDeleteCons.getExtField(), user);
+                    topMap.putAll(map);
+                    presenter.saveTopConversation(user);
+                }
+            }
+
+        });
+        refresh();
+        ((MainActivity) getActivity()).updateUnreadLabel();
+    }
+
+    @Override
+    public void saveTopConversation(long code) {
+        if (code >= 1) {
+            dialog.dismiss();
+            refresh();
+        }
+    }
+
+    @Override
+    public void delTopConversation(int code) {
+        if (code >= 1) {
+            dialog.dismiss();
+            refresh();
+        }
+    }
+
+    @Override
+    public void delConversation(boolean flag) {
+        if (flag) {
+            dialog.dismiss();
+            refresh();
+        }
     }
 
 }

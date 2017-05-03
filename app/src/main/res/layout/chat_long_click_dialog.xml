@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/reuse_layout_bg"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/top"
+        android:text="删除消息"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:textSize="16sp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/center"
+        android:text="删除会话"
+        android:layout_marginTop="0.5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:textSize="16sp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:id="@+id/bottom"
+        android:layout_marginTop="0.5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:textSize="16sp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+</LinearLayout>

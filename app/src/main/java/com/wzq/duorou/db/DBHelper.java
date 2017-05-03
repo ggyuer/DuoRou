@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wzq.duorou.chat.model.DisturbDao;
 import com.wzq.duorou.chat.model.InviteMessgeDao;
+import com.wzq.duorou.chat.model.TopUserDao;
 import com.wzq.duorou.chat.model.UserDao;
 import com.wzq.duorou.mvp.modle.BreedDao;
 import com.wzq.duorou.mvp.modle.NewsDao;
@@ -79,6 +81,22 @@ public class DBHelper extends SQLiteOpenHelper {
             + BreedDao.BREED_REID + " INTEGER, "
             + BreedDao.BREED_LOCATION + " TEXT); ";
 
+    /**
+     * 会话置顶
+     */
+    private static final String TOP_TABLE_CREATE = "CREATE TABLE "
+            + TopUserDao.TABLE_NAME + " ("
+            + TopUserDao.COLUMN_NAME_ID + " TEXT PRIMARY KEY, "
+            + TopUserDao.COLUMN_NAME_IS_GOUP + " TEXT, "
+            + TopUserDao.COLUMN_NAME_TIME + " TEXT);";
+
+    /**
+     * 消息免打扰
+     */
+    private static final String DISTURB_TABLE_CREATE = "CREATE TABLE "
+            + DisturbDao.TABLE_NAME + " ("
+            + DisturbDao.USER_ID + " TEXT PRIMARY KEY);";
+
     public static DBHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DBHelper(context.getApplicationContext());
@@ -105,22 +123,24 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(ROBOT_TABLE_CREATE);
         db.execSQL(CREATE_NEWS_TABLE);
         db.execSQL(CREATE_BREED_TABLE);
+        db.execSQL(TOP_TABLE_CREATE);
+        db.execSQL(DISTURB_TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion < 2){
-            db.execSQL("ALTER TABLE "+ UserDao.TABLE_NAME +" ADD COLUMN "+
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + UserDao.TABLE_NAME + " ADD COLUMN " +
                     UserDao.COLUMN_NAME_AVATAR + " TEXT ;");
         }
 
-        if(oldVersion < 3){
+        if (oldVersion < 3) {
             db.execSQL(CREATE_PREF_TABLE);
         }
-        if(oldVersion < 4){
+        if (oldVersion < 4) {
             db.execSQL(ROBOT_TABLE_CREATE);
         }
-        if(oldVersion < 5){
+        if (oldVersion < 5) {
             db.execSQL("ALTER TABLE " + InviteMessgeDao.TABLE_NAME + " ADD COLUMN " +
                     InviteMessgeDao.COLUMN_NAME_UNREAD_MSG_COUNT + " INTEGER ;");
         }

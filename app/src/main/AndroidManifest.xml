@@ -105,7 +105,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activitys.RegisterActivity" />
-        <activity android:name=".chat.view.activity.ChatActivity" />
+        <activity
+            android:name=".chat.view.activity.ChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 群组列表 -->
         <activity
@@ -136,7 +141,9 @@
         <activity android:name=".chat.view.activity.UserProfileActivity" />
         <activity android:name=".activitys.ImproveActivity" />
         <activity android:name=".activitys.WebActivity" />
-        <activity android:name=".activitys.ImageActivity"></activity>
+        <activity android:name=".activitys.ImageActivity" />
+        <activity android:name=".chat.view.activity.GroupDetailActivity" />
+        <activity android:name=".chat.view.activity.SingleDetailActivity"></activity>
     </application>
 
 </manifest>

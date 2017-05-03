@@ -50,6 +50,8 @@ import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
 import com.wzq.duorou.R;
+import com.wzq.duorou.chat.view.activity.GroupDetailActivity;
+import com.wzq.duorou.chat.view.activity.SingleDetailActivity;
 import com.wzq.duorou.ease.widget.EaseChatMessageList;
 import com.wzq.duorou.ease.widget.EaseVoiceRecorderView;
 import com.wzq.duorou.ease.widget.chatmenu.EaseChatExtendMenu;
@@ -57,6 +59,7 @@ import com.wzq.duorou.ease.widget.chatmenu.EaseChatInputMenu;
 import com.wzq.duorou.ease.widget.chatrow.EaseCustomChatRowProvider;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
@@ -103,6 +106,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected int[] itemIds = {ITEM_TAKE_PICTURE, ITEM_PICTURE};
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
+    private EMGroup group;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,6 +131,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected void initView() {
         // hold to record voice
         //noinspection ConstantConditions
+        group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
         voiceRecorderView = (EaseVoiceRecorderView) getView().findViewById(R.id.voice_recorder);
 
         // 回话列表
@@ -193,7 +198,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             title_right.setImageResource(R.drawable.detail);
             if (chatType == EaseConstant.CHATTYPE_GROUP) {
                 //group chat
-                EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
+
                 if (group != null)
                     //titleBar.setTitle(group.getGroupName());
                     title_name.setText(group.getGroupName());
@@ -226,9 +231,18 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             @Override
             public void onClick(View v) {
                 if (chatType == EaseConstant.CHATTYPE_SINGLE) {
-                    emptyHistory();
+                    Intent intent = SingleDetailActivity.genInstance(getActivity());
+                    intent.putExtra("username", toChatUsername);
+                    startActivityForResult(intent, 2002);
                 } else {
-                    toGroupDetails();
+                    Intent intent = GroupDetailActivity.getInstance(getActivity());
+                    intent.putExtra("username", toChatUsername);
+                    intent.putExtra("groupId", group.getGroupId());
+                    intent.putExtra("owner", group.getOwner());
+                    ArrayList<String> m = new ArrayList<>();
+                    m.addAll(group.getMembers());
+                    intent.putStringArrayListExtra("m", m);
+                    startActivityForResult(intent, 2001);
                 }
             }
         });

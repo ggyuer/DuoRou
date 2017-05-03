@@ -6,6 +6,9 @@ import android.support.multidex.MultiDex;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.wzq.duorou.beans.TopUser;
+
+import java.util.Map;
 
 /**
  * Created by wzq on 2017/3/10.
@@ -52,5 +55,41 @@ public class App extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //MultiDex.install(this);
+    }
+
+    /**
+     * 获取内存中置顶好友user list
+     *
+     * @return
+     */
+    public Map<String, TopUser> getTopUserList() {
+        return MyHelper.getInstance().getTopUserList();
+    }
+
+    /**
+     * 设置置顶好友到内存中
+     *
+     * @param contactList
+     */
+    public void setTopUserList(Map<String, TopUser> contactList) {
+        MyHelper.getInstance().setTopUserList(contactList);
+    }
+
+    /**
+     * 删除会话置顶的好友
+     *
+     * @param userName
+     */
+    public int deleteTopUser(String userName) {
+        return MyHelper.getInstance().deleteTopUser(userName);
+    }
+
+    /**
+     * 保存单个会话置顶的好友
+     *
+     * @param user
+     */
+    public long setTopUser(TopUser user) {
+        return MyHelper.getInstance().setTopUser(user);
     }
 }

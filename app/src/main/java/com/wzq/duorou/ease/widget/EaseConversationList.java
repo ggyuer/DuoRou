@@ -59,16 +59,16 @@ public class EaseConversationList extends ListView {
         
     }
 
-    public void init(List<EMConversation> conversationList){
-        this.init(conversationList, null);
+    public void init(List<EMConversation> conversationList, List<EMConversation> top_list) {
+        this.init(conversationList, null, top_list);
     }
 
-    public void init(List<EMConversation> conversationList, EaseConversationListHelper helper){
+    public void init(List<EMConversation> conversationList, EaseConversationListHelper helper, List<EMConversation> top_list) {
         conversations = conversationList;
-        if(helper != null){
+        if (helper != null) {
             this.conversationListHelper = helper;
         }
-        adapter = new EaseConversationAdapter(context, 0, conversationList);
+        adapter = new EaseConversationAdapter(context, 0, conversationList, top_list);
         adapter.setCvsListHelper(conversationListHelper);
         adapter.setPrimaryColor(primaryColor);
         adapter.setPrimarySize(primarySize);
@@ -78,7 +78,8 @@ public class EaseConversationList extends ListView {
         adapter.setTimeSize(timeSize);
         setAdapter(adapter);
     }
-    
+
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {

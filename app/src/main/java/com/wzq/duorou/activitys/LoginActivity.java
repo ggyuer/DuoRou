@@ -1,16 +1,3 @@
-/**
- * Copyright (C) 2016 Hyphenate Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.wzq.duorou.activitys;
 
 import android.annotation.TargetApi;
@@ -45,7 +32,7 @@ import com.wzq.duorou.utils.PreferenceManager;
 
 /**
  * Login screen
- * 
+ *
  */
 public class LoginActivity extends BaseActivity {
 	private static final String TAG = "LoginActivity";
@@ -117,7 +104,7 @@ public class LoginActivity extends BaseActivity {
 
 	/**
 	 * login
-	 * 
+	 *
 	 * @param view
 	 */
 	public void login(View view) {
@@ -159,7 +146,7 @@ public class LoginActivity extends BaseActivity {
 
         // reset current user name before login
 		MyHelper.getInstance().setCurrentUserName(currentUsername);
-        
+        PreferenceManager.getInstance().setValueToPrefrences(Constant.USER_HX_ID,"");
 		final long start = System.currentTimeMillis();
 		// call login method
 		Log.d(TAG, "EMClient.getInstance().login");
@@ -234,7 +221,7 @@ public class LoginActivity extends BaseActivity {
 
 	/**
 	 * register
-	 * 
+	 *
 	 * @param view
 	 */
 	public void register(View view) {

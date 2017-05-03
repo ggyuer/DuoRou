@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.wzq.duorou.beans.Disturb;
 import com.wzq.duorou.beans.InviteMessage;
 import com.wzq.duorou.beans.InviteMessage.InviteMesageStatus;
 import com.wzq.duorou.beans.RobotUser;
+import com.wzq.duorou.beans.TopUser;
 import  com.wzq.duorou.chat.model.InviteMessgeDao;
 import  com.wzq.duorou.chat.model.UserDao;
 import  com.wzq.duorou.chat.parse.UserProfileManager;
@@ -133,6 +136,83 @@ public class MyHelper {
         }
         return instance;
     }
+
+    /*************
+     * TopUser
+     **************/
+
+    private Map<String, TopUser> topUserList;
+
+    public void setTopUserList(Map<String, TopUser> topUserList) {
+        this.topUserList = topUserList;
+    }
+
+    public long setTopUser(TopUser user) {
+        if (user != null) {
+            topUserList.put(user.getUserName(), user);
+            return getModel().saveTopUser(user);
+        }
+        return 0;
+    }
+
+    public int deleteTopUser(String userName) {
+        if (!TextUtils.isEmpty(userName)) {
+            topUserList.remove(userName);
+            return getModel().deleteTopUser(userName);
+        }
+        return 0;
+    }
+
+    public Map<String, TopUser> getTopUserList() {
+        if (topUserList == null) {
+            topUserList = getModel().getTopUserList();
+        }
+        return topUserList;
+    }
+
+    /*************
+     * Disturb
+     **************/
+
+    private Map<String, Disturb> disturbMap;
+
+    public boolean saveDisturbMap(Map<String, Disturb> disturbMap) {
+        this.disturbMap = disturbMap;
+        if (disturbMap != null) {
+            List<Disturb> disturbs = new ArrayList<>();
+            for (String key : disturbMap.keySet()) {
+                disturbs.add(disturbMap.get(key));
+            }
+            return getModel().saveDisturbList(disturbs);
+        }
+        return false;
+    }
+
+    public Map<String, Disturb> getDisturbList() {
+        if (disturbMap == null) {
+            disturbMap = getModel().getDisturbList();
+        }
+        return disturbMap;
+    }
+
+
+    public long saveDisturb(Disturb disturb) {
+        if (disturb != null) {
+            disturbMap.put(disturb.getUserId(), disturb);
+            return getModel().saveDisturb(disturb);
+        }
+        return 0;
+    }
+
+    public long deleteDisturb(String userId) {
+        if (!TextUtils.isEmpty(userId)) {
+            disturbMap.remove(userId);
+            return getModel().deleteDisturb(userId);
+        }
+        return 0;
+    }
+
+
 
     /**
      * init helper
