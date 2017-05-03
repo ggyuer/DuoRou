@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/title_perfect"
+        layout="@layout/reuse_view_title_top" />
+
+    <com.wzq.duorou.widget.CircleImageView
+        android:id="@+id/avatar_perfect"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/title_perfect"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/tv_avatar_perfect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/avatar_perfect"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:text="上传头像"
+        android:textColor="@color/first_text_color"
+        android:textSize="14sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/ll_perfect_gender"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignLeft="@+id/view"
+        android:layout_alignStart="@+id/view"
+        android:layout_below="@+id/edit_nick_perfect"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="性别"
+            android:textColor="@color/seconed_text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:text="未选择"
+            android:textColor="@color/first_text_color"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_perfect_gender"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:text="性别设置完成后，不可修改，请谨慎选择"
+        android:textColor="@color/seconed_text_color"
+        android:textSize="13sp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/ll_perfect_gender"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#d8d8d8" />
+
+    <EditText
+        android:id="@+id/edit_nick_perfect"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/tv_avatar_perfect"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:hint="输入昵称"
+        android:textColor="@color/first_text_color"
+        android:textColorHint="@color/seconed_text_color"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/edit_nick_perfect"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#d8d8d8" />
+
+    <Button
+        android:id="@+id/btn_save_perfect"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/textView4"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/btn_userinfo_selector"
+        android:text="完成"
+        android:textColor="@drawable/btn_textcolor_selector"
+        android:textSize="18sp" />
+</RelativeLayout>

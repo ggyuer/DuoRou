@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wzq.duorou.fragments.TopicFragment">
+
+   <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/refreshLayout"
+       android:paddingTop="8dp"
+       android:paddingLeft="8dp"
+       android:paddingRight="8dp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <com.wzq.duorou.widget.PullUpLoadMoreListView
+           android:id="@+id/listView"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:divider="@null"
+           android:dividerHeight="5dp">
+
+
+       </com.wzq.duorou.widget.PullUpLoadMoreListView>
+
+   </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

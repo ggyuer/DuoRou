@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wzq.duorou.widget.ResideLayout android:id="@+id/resideLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.MainActivity">
+
+    <com.wzq.duorou.theme.ColorRelativeLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:background="?attr/menuBackground"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/top_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="35dp" />
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="80dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_menu"
+            android:layout_below="@+id/top_menu">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/main_home"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_home"
+                    android:text="@string/main_home" />
+
+                <TextView
+                    android:id="@+id/main_news"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_news"
+                    android:text="@string/main_news" />
+
+                <TextView
+                    android:id="@+id/main_topic"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_topic"
+                    android:text="@string/main_topic" />
+
+                <TextView
+                    android:id="@+id/main_wiki"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_wiki"
+                    android:text="@string/main_wiki" />
+
+                <TextView
+                    android:id="@+id/main_breed"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_breed"
+                    android:text="@string/main_breed" />
+
+                <TextView
+                    android:id="@+id/main_question"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_question"
+                    android:text="@string/main_question" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/main_friends"
+                        style="@style/MenuStyle"
+                        android:drawableLeft="@drawable/main_friends"
+                        android:text="@string/main_friends" />
+                    <TextView
+                        android:id="@+id/unread_address_number"
+                        android:drawableLeft="@drawable/ease_unread_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/main_groups"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_groups"
+                    android:text="@string/main_groups" />
+
+                <TextView
+                    android:id="@+id/main_setting"
+                    style="@style/MenuStyle"
+                    android:drawableLeft="@drawable/main_setting"
+                    android:text="@string/main_setting" />
+
+                <!--<TextView-->
+                <!--android:id="@+id/about"-->
+                <!--style="@style/MenuStyle"-->
+                <!--android:text="@string/about"/>-->
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/bottom_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:padding="12dp"
+                android:text="关于"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:padding="12dp"
+                android:text="主题"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </com.wzq.duorou.theme.ColorRelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.wzq.duorou.theme.ColorView
+            android:id="@+id/status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="?attr/colorPrimary" />
+
+        <include layout="@layout/tool_bar_layout" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
+
+            <!--<com.wzq.duorou.theme.ColorTextView-->
+                <!--android:id="@+id/shuaxin"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginBottom="40dp"-->
+                <!--android:layout_marginRight="12dp"-->
+                <!--android:background="@drawable/main_btn_shape"-->
+                <!--android:drawableLeft="@drawable/shuaxin"-->
+                <!--android:drawablePadding="0dp"-->
+                <!--android:textColor="@color/white" />-->
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</com.wzq.duorou.widget.ResideLayout>

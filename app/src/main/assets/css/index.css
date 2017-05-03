@@ -1,0 +1,302 @@
+﻿* {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style: none;
+}
+
+html {
+	font-size: 12px;
+}
+
+html,
+body {
+	font-family: PingFang-SC-Regular, Helvetica Neue, Helvetica, microsoft yahei, sans-serif;
+	color: #555;
+	overflow: -Scroll;
+	overflow-x: hidden;
+	background-color: whitesmoke;
+
+}
+
+
+/*顶部通用css*/
+
+header {
+	background-color: #335F62;
+	width: 100%;
+	height: 3.5rem;
+	margin-top: -0.2rem;
+	z-index: 98;
+}
+
+header div {
+	float: left;
+}
+
+header a {
+	color: white;
+}
+
+header .fanhui {
+	margin-left: 0.7rem;
+	margin-top: 0.8rem;
+}
+
+header .fanhui img {
+	width: 1.8rem;
+	vertical-align: sub;
+}
+
+header div img {
+	line-height: 3.5rem;
+	width: 2rem;
+}
+
+header .span1 {
+	display: block;
+	width: 12rem;
+	line-height: 3.5rem;
+	margin: 2px auto;
+	text-align: center;
+	font-size: 1.38rem;
+	color: white;
+}
+
+header .gengduo {
+	display: block;
+	position: absolute;
+	right: 1rem;
+	top: 0.7rem;
+	font-size: 1.5rem;
+	color: white;
+}
+header .gengduo img{
+	width: 1.8rem;
+}
+
+/*中间主体总部份*/
+
+section {
+	/*max-width: 640px;*/
+	min-width: 320px;
+	margin: 0rem auto;
+	margin-bottom: 60px;
+	height: 100%;
+	
+}
+
+.section_nav_hyxq {
+	margin-top: -4rem;
+	background-color: white;
+}
+
+.neirong_div_dshy {
+	text-align: center;
+}
+.neirong_div_dshy .neirong_div_dshy_name{
+	color: #6A6A6A !important;
+}
+.neirong_div .neirong_div_dshy_come {
+	font-size: 0.9rem !important;
+	color: gray !important;
+}
+
+.section_nav_hyxq .hyxq_nav {
+	margin: 0rem auto;
+	margin-left: 1rem;
+	margin-top: 4rem;
+	padding-top: 1rem;
+	margin-right: 1rem;
+}
+
+.hyxq_nav .hyxq_nav_text {
+	color: #6A6A6A;
+	font-size: 1.45rem;
+}
+
+.hyxq_nav .hyxq_nav_time {
+	color: gray;
+	font-size: 1rem;
+}
+
+.section_nav_hyxq .neirong_div {
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.section_nav_hyxq .neirong_div img {
+	width: 100%;
+}
+
+.section_nav_hyxq .neirong_div p {
+	/*text-indent: 2em;*/
+	font-size: 1rem;
+	color: #6A6A6A;
+}
+
+.dsxq_img {
+	width: 50%;
+	margin-left: 25%;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+
+/*返回顶部*/
+
+.return_top {
+	width: 2rem;
+	height: 2rem;
+	line-height: 2rem;
+	border-radius: 50%;
+	background-color: black;
+	position: fixed;
+	bottom: 5rem;
+	right: 1.5rem;
+	color: white;
+	display: none;
+}
+
+.return_top i {
+	margin-left: 0.3rem;
+}
+
+/*底部样式*/
+
+
+.weui_tabbar .weui_tabbar_icon_a img {
+	padding-bottom: 3rem;
+	width: 2.3rem !important;
+	height: 3.2rem !important;
+	position: absolute;
+	bottom:-1rem;
+	
+}
+
+.weui_tabbar {
+	position: fixed !important;
+	bottom: -5px;
+	height: 4.3rem;
+	background-color: #E6E7E9;
+	text-align: center;
+	z-index: 98;
+}
+
+.weui_tabbar .weui_tabbar_item {
+	text-align: center;
+	z-index: 200;
+}
+
+.weui_tabbar .weui_tabbar_icon img {
+	width: 2rem;
+	height: 2rem;
+}
+
+.weui_tabbar a .weui_tabbar_label {
+	color: gray;
+	margin-top: 0rem;
+	font-size: 1rem;
+	/*border: 1px solid black;*/
+	/*position: relative;*/
+}
+.weui_tabbar_label_1{
+	/*text-align: center;*/
+	color: gray;
+	position:absolute;
+	/*margin-left: 8%;*/
+	top:2.5rem;
+	
+	/*border: 1px solid black;*/
+	font-size: 1rem;
+}
+.weui_tabbar_item .huomiao {
+	position: relative;
+	top: -1.8rem;
+	height:6rem;
+	/*margin-left:1rem;*/
+	background-color: #E6E7E9;
+	text-align: center;
+	border-radius: 50%;
+	z-index: 0;
+}
+/*footer{
+	margin-bottom: -1rem;
+}*/
+.show{
+	display:block;
+}
+.foot{
+	display: none;
+}
+.weui_tabbar:before {
+	border-top: none;
+}
+.weui_tabbar:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    color: #979797;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.weui_tabbar_item {
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 7px 0 0;
+    -webkit-tap-highlight-color: transparent;
+}
+.weui_tabbar_icon {
+    margin: 0 auto;
+    width: 24px;
+    height: 24px;
+}
+.weui_tabbar_label {
+    text-align: center;
+}
+.weui_tabbar {  
+    display: flex; 
+    width: 100%;
+}
+.weui_tabbar a .iconfont-gengduo4 {
+	font-size: 3rem;
+	color: black;
+}
+
+.weui_tabbar_icon {
+	color: gray;
+	text-align: center;
+}
+
+.weui_tabbar_item_1 p {
+	color: #829EA0 !important;
+}
+
+
+@media only screen and (min-width:400px) {
+	html {
+		font-size: 12px!important
+	}
+}
+
+@media only screen and (min-width:414px) {
+	html {
+		font-size: 12px!important
+	}
+}
+
+@media only screen and (min-width:480px) {
+	html {
+		font-size: 12px!important
+	}
+}

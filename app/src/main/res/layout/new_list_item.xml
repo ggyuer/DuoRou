@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/newImg"
+            android:layout_margin="12dp"
+            android:background="@drawable/new_test"
+            android:layout_width="100dp"
+            android:layout_height="70dp" />
+        <TextView
+            android:layout_toRightOf="@+id/newImg"
+            android:id="@+id/title"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="80后IT打造超过200平米的原木露台！"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/who"
+            android:text="分享人: 狐狸大叔"
+            android:textSize="13sp"
+            android:textColor="@color/title_bg"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/newImg"
+            android:layout_marginTop="12dp"
+            android:layout_below="@+id/title"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/ping"
+            android:text="24评"
+            android:textSize="14sp"
+            android:textColor="@color/title_bg"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/who"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+         android:layout_alignParentRight="true"
+            android:layout_below="@+id/title"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
