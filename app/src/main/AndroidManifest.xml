@@ -51,12 +51,12 @@
         android:supportsRtl="true"
         android:theme="@style/BrownTheme">
 
-        <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="330013#cangcircle" />
         <!--<meta-data-->
-        <!--android:name="EASEMOB_APPKEY"-->
-        <!--android:value="easemob-demo#chatdemoui" />-->
+            <!--android:name="EASEMOB_APPKEY"-->
+            <!--android:value="330013#cangcircle" />-->
+        <meta-data
+        android:name="EASEMOB_APPKEY"
+        android:value="easemob-demo#chatdemoui" />
 
         <!-- gilde加载https图片页面 -->
         <meta-data

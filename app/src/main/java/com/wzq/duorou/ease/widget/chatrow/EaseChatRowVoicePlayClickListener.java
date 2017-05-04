@@ -30,6 +30,7 @@ import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMVoiceMessageBody;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.util.EMLog;
+import com.wzq.duorou.R;
 
 import java.io.File;
 
@@ -142,9 +143,9 @@ public class EaseChatRowVoicePlayClickListener implements View.OnClickListener {
 	private void showAnimation() {
 		// play voice, and start animation
 		if (message.direct() == EMMessage.Direct.RECEIVE) {
-			voiceIconView.setImageResource(com.hyphenate.easeui.R.anim.voice_from_icon);
+			voiceIconView.setImageResource(R.drawable.voice_from_icon);
 		} else {
-			voiceIconView.setImageResource(com.hyphenate.easeui.R.anim.voice_to_icon);
+			voiceIconView.setImageResource(R.drawable.voice_to_icon);
 		}
 		voiceAnimation = (AnimationDrawable) voiceIconView.getDrawable();
 		voiceAnimation.start();

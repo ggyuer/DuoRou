@@ -10,6 +10,14 @@
     <!-- main end -->
 
     <string name="theme">主题</string>
+    <string name="refuse">拒绝</string>
+    <string name="search_contanier">搜索："%s"</string>
+    <string name="invite_join_group">邀请加群</string>
+    <string name="accept_join_group">同意加群</string>
+    <string name="refuse_join_group">拒绝加群</string>
+    <string name="Are_refuse_with">拒绝成功</string>
+    <string name="Refuse_with_failure">拒绝失败</string>
+    <string name="user_already_in_contactlist">此用户已是你好友(被拉黑状态)，从黑名单列表中移出即可</string>
     <string name="cancel">取消</string>
     <string name="done">完成</string>
     <string name="about_me">\nImGeek：<a href="http://www.imgeek.org/people/ggyuer">ggyuer</a>\n\nGithub：<a href="https://github.com/ggyuer">ggyuer</a></string>

@@ -182,7 +182,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="10dip"
-                        android:text="@string/call_option"
+                        android:text="通话设置"
                         android:textColor="@color/btn_gray_pressed"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:paddingLeft="10dip"
-                    android:text="@string/delete_msg_when_exit_group"
+                    android:text="退出时删除聊天数据"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:typeface="serif" />
@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:paddingLeft="10dip"
-                    android:text="@string/auto_accept_group_invitation"
+                    android:text="自动同意加群邀请"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:typeface="serif" />

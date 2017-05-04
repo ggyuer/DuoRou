@@ -132,14 +132,14 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             }
             // group message, show group avatar
             Glide.with(getContext())
-                    .load(com.hyphenate.easeui.R.drawable.groups_icon)
+                    .load(R.drawable.groups_icon)
                     .transform(new GlideCircleTransform(getContext()))
                     .into(holder.avatar);
             EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
             holder.name.setText(group != null ? group.getGroupName() : username);
         } else if(conversation.getType() == EMConversationType.ChatRoom){
             Glide.with(getContext())
-                    .load(com.hyphenate.easeui.R.drawable.groups_icon)
+                    .load(R.drawable.groups_icon)
                     .transform(new GlideCircleTransform(getContext()))
                     .into(holder.avatar);
             EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(username);
