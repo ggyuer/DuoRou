@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wzq.duorou.chat.model.ChatFileDao;
 import com.wzq.duorou.chat.model.DisturbDao;
 import com.wzq.duorou.chat.model.InviteMessgeDao;
 import com.wzq.duorou.chat.model.TopUserDao;
@@ -82,6 +83,23 @@ public class DBHelper extends SQLiteOpenHelper {
             + BreedDao.BREED_LOCATION + " TEXT); ";
 
     /**
+     * 聊天文件
+     */
+    private static final String CHAT_FILE_TABLE_CREATE = "CREATE TABLE "
+            + ChatFileDao.TABLE_NAME + " ("
+            + ChatFileDao.CHAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + ChatFileDao.USER_ID + " TEXT, "
+            + ChatFileDao.CHAT_TYPE + " TEXT, "
+            + ChatFileDao.FILE_TYPE + " TEXT, "
+            + ChatFileDao.PATH + " TEXT, "
+            + ChatFileDao.TIME + " TEXT, "
+            + ChatFileDao.SECRET + " TEXT, "
+            + ChatFileDao.DURATION + " TEXT, "
+            + ChatFileDao.MESSAGE_ID + " TEXT, "
+            + ChatFileDao.THUMB_PATH + " TEXT, "
+            + ChatFileDao.REMOTE_PATH + " TEXT);";
+
+    /**
      * 会话置顶
      */
     private static final String TOP_TABLE_CREATE = "CREATE TABLE "
@@ -125,6 +143,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_BREED_TABLE);
         db.execSQL(TOP_TABLE_CREATE);
         db.execSQL(DISTURB_TABLE_CREATE);
+        db.execSQL(CHAT_FILE_TABLE_CREATE);
     }
 
     @Override

@@ -2,31 +2,32 @@ package com.hyphenate.easeui.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.R;
 import com.hyphenate.util.EMLog;
+import com.hyphenate.util.PathUtil;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * show the video
- * 
  */
-public class EaseShowVideoActivity extends EaseBaseActivity{
+public class EaseShowVideoActivity extends EaseBaseActivity {
 	private static final String TAG = "ShowVideoActivity";
-	
+
 	private RelativeLayout loadingLayout;
 	private ProgressBar progressBar;
 	private String localFilePath;
@@ -40,46 +41,93 @@ public class EaseShowVideoActivity extends EaseBaseActivity{
 		setContentView(R.layout.ease_showvideo_activity);
 		loadingLayout = (RelativeLayout) findViewById(R.id.loading_layout);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-		final EMMessage message = getIntent().getParcelableExtra("msg");
-		if (!(message.getBody() instanceof EMVideoMessageBody)) {
-			Toast.makeText(EaseShowVideoActivity.this, "Unsupported message body", Toast.LENGTH_SHORT).show();
-			finish();
-			return;
-		}
-		EMVideoMessageBody messageBody = (EMVideoMessageBody)message.getBody();
-
-		localFilePath = messageBody.getLocalUrl();
-
+		localFilePath = getIntent().getStringExtra("localpath");
+		String remotepath = getIntent().getStringExtra("remotepath");
+		String secret = getIntent().getStringExtra("secret");
+		Log.e(TAG, "localFilePath: " + localFilePath);
 		if (localFilePath != null && new File(localFilePath).exists()) {
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(new File(localFilePath)),
-					"video/mp4");
+			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+				intent.setDataAndType(Uri.parse(localFilePath), "video/mp4");
+				Log.e(TAG, "localFilePath: " + 1);
+			} else {
+				if (localFilePath.startsWith("/data/user")) {
+					intent.setDataAndType(Uri.parse(localFilePath), "video/mp4");
+					Log.e(TAG, "localFilePath: " + 2);
+				} else {
+					intent.setDataAndType(Uri.fromFile(new File(localFilePath)), "video/mp4");
+					Log.e(TAG, "localFilePath: " + 3);
+				}
+			}
 			startActivity(intent);
 			finish();
-		} else {
+		} else if (!TextUtils.isEmpty(remotepath) && !remotepath.equals("null")) {
 			EMLog.d(TAG, "download remote video file");
-			downloadVideo(message);
+			Map<String, String> maps = new HashMap<String, String>();
+			if (!TextUtils.isEmpty(secret)) {
+				maps.put("share-secret", secret);
+			}
+			downloadVideo(remotepath, maps);
+		} else {
+
 		}
+	}
+
+	public String getLocalFilePath(String remoteUrl) {
+		String localPath;
+		if (remoteUrl.contains("/")) {
+			localPath = PathUtil.getInstance().getVideoPath().getAbsolutePath()
+					+ "/" + remoteUrl.substring(remoteUrl.lastIndexOf("/") + 1)
+					+ ".mp4";
+		} else {
+			localPath = PathUtil.getInstance().getVideoPath().getAbsolutePath()
+					+ "/" + remoteUrl + ".mp4";
+		}
+		return localPath;
 	}
 
 	/**
 	 * show local video
+	 *
 	 * @param localPath -- local path of the video file
 	 */
-	private void showLocalVideo(String localPath){
+	private void showLocalVideo(String localPath) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(new File(localPath)),
-				"video/mp4");
+		Log.e(TAG, "localPath: " + localPath);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+			intent.setDataAndType(Uri.parse(localPath), "video/mp4");
+			Log.e(TAG, "localPath: " + 1);
+		} else {
+			if (localPath.startsWith("/data/user")) {
+				intent.setDataAndType(Uri.parse(localFilePath), "video/mp4");
+				Log.e(TAG, "localFilePath: " + 2);
+			} else {
+				intent.setDataAndType(Uri.fromFile(new File(localFilePath)), "video/mp4");
+				Log.e(TAG, "localFilePath: " + 3);
+			}
+		}
 		startActivity(intent);
 		finish();
 	}
 
+
 	/**
 	 * download video file
 	 */
-	private void downloadVideo(EMMessage message) {
-		message.setMessageStatusCallback(new EMCallBack() {
+	private void downloadVideo(final String remoteUrl,
+							   final Map<String, String> header) {
+
+		if (TextUtils.isEmpty(localFilePath)) {
+			localFilePath = getLocalFilePath(remoteUrl);
+		}
+		if (new File(localFilePath).exists()) {
+			showLocalVideo(localFilePath);
+			return;
+		}
+		loadingLayout.setVisibility(View.VISIBLE);
+
+		EMCallBack callback = new EMCallBack() {
+
 			@Override
 			public void onSuccess() {
 				runOnUiThread(new Runnable() {
@@ -94,7 +142,7 @@ public class EaseShowVideoActivity extends EaseBaseActivity{
 			}
 
 			@Override
-			public void onProgress(final int progress,String status) {
+			public void onProgress(final int progress, String status) {
 				Log.d("ease", "video progress:" + progress);
 				runOnUiThread(new Runnable() {
 
@@ -114,14 +162,15 @@ public class EaseShowVideoActivity extends EaseBaseActivity{
 					file.delete();
 				}
 			}
-		});
-		EMClient.getInstance().chatManager().downloadAttachment(message);
+		};
+
+		EMClient.getInstance().chatManager().downloadFile(remoteUrl, localFilePath, header, callback);
 	}
 
 	@Override
 	public void onBackPressed() {
 		finish();
 	}
- 
+
 
 }

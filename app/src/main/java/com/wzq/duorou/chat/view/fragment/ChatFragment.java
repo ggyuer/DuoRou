@@ -26,6 +26,9 @@ import com.hyphenate.util.PathUtil;
 import com.wzq.duorou.Constant;
 import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
+import com.wzq.duorou.chat.presenter.ChatImpl;
+import com.wzq.duorou.chat.presenter.ChatPresenter;
+import com.wzq.duorou.chat.view.IChatView;
 import com.wzq.duorou.chat.view.activity.ImageGridActivity;
 import com.wzq.duorou.activitys.MainActivity;
 import com.wzq.duorou.beans.RobotUser;
@@ -39,7 +42,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
-public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper {
+public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper,IChatView {
 
     // constant start from 11 to avoid conflict with constant in base class
     private static final int ITEM_VIDEO = 11;
@@ -60,7 +63,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 4;
 
     private boolean isRobot;
-
+    private ChatPresenter presenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -75,6 +78,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 isRobot = true;
             }
         }
+        presenter = new ChatImpl(this);
+        presenter.isShowDisturb(toChatUsername);
         super.setUpView();
 
         titleBar.setLeftLayoutClickListener(new OnClickListener() {
@@ -178,7 +183,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                         inputAtUsername(username, false);
                     }
                     break;
-
+                case DISTURB_REQUEST_CODE:
+                    presenter.isShowDisturb(toChatUsername);
+                    break;
                 default:
                     break;
             }
@@ -328,4 +335,12 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     }
 
+    @Override
+    public void isShowDisturb(boolean flag) {
+        if (flag) {
+            disturb.setVisibility(View.VISIBLE);
+        } else {
+            disturb.setVisibility(View.GONE);
+        }
+    }
 }

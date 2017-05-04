@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="119dp"
+    android:layout_height="119dp"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/fileBg"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ease_default_image">
+
+
+            <TextView
+                android:id="@+id/lianjieTx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:maxWidth="180dp"
+                android:text="15486484647661231"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/fileTypeImg"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:id="@+id/videoTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/fileTypeImg"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000"
+                android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/file_selection_state"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/chat_file_checked_selector"
+                android:button="@null"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

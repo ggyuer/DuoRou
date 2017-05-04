@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,6 +36,7 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseEmojicon;
@@ -49,7 +51,11 @@ import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
+import com.hyphenate.util.TextFormater;
 import com.wzq.duorou.R;
+import com.wzq.duorou.beans.ChatFile;
+import com.wzq.duorou.chat.impl.ChatFileDaoImpl;
+import com.wzq.duorou.chat.model.ChatFileDao;
 import com.wzq.duorou.chat.view.activity.GroupDetailActivity;
 import com.wzq.duorou.chat.view.activity.SingleDetailActivity;
 import com.wzq.duorou.ease.widget.EaseChatMessageList;
@@ -59,7 +65,9 @@ import com.wzq.duorou.ease.widget.chatmenu.EaseChatInputMenu;
 import com.wzq.duorou.ease.widget.chatrow.EaseCustomChatRowProvider;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
@@ -67,6 +75,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;
     protected static final int REQUEST_CODE_LOCAL = 3;
+    protected static final int DISTURB_REQUEST_CODE = 8001;
 
     /**
      * params to fragment
@@ -233,7 +242,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 if (chatType == EaseConstant.CHATTYPE_SINGLE) {
                     Intent intent = SingleDetailActivity.genInstance(getActivity());
                     intent.putExtra("username", toChatUsername);
-                    startActivityForResult(intent, 2002);
+                    startActivityForResult(intent, DISTURB_REQUEST_CODE);
                 } else {
                     Intent intent = GroupDetailActivity.getInstance(getActivity());
                     intent.putExtra("username", toChatUsername);
@@ -242,7 +251,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     ArrayList<String> m = new ArrayList<>();
                     m.addAll(group.getMembers());
                     intent.putStringArrayListExtra("m", m);
-                    startActivityForResult(intent, 2001);
+                    startActivityForResult(intent, DISTURB_REQUEST_CODE);
                 }
             }
         });
@@ -744,9 +753,20 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         EMMessage message = EMMessage.createVoiceSendMessage(filePath, length, toChatUsername);
         sendMessage(message);
     }
-
+    ChatFileDao dao = new ChatFileDaoImpl(getActivity());
+    ChatFile chatFile = new ChatFile();
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
     protected void sendImageMessage(String imagePath) {
         EMMessage message = EMMessage.createImageSendMessage(imagePath, false, toChatUsername);
+        if (!TextUtils.isEmpty(imagePath) && message != null) {
+            chatFile.setPath(imagePath);
+            chatFile.setMessageId(message.getMsgId());
+            chatFile.setChatType(message.getChatType().name());
+            chatFile.setFileType(ChatFileDao.IMG_FILE);
+            chatFile.setTime(df.format(new Date()));
+            chatFile.setUserId(toChatUsername);
+            dao.saveChatFile(chatFile);
+        }
         sendMessage(message);
     }
 
@@ -757,6 +777,20 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     protected void sendVideoMessage(String videoPath, String thumbPath, int videoLength) {
         EMMessage message = EMMessage.createVideoSendMessage(videoPath, thumbPath, videoLength, toChatUsername);
+        EMVideoMessageBody body = (EMVideoMessageBody) message.getBody();
+        String size = TextFormater.getDataSize(body.getVideoFileLength());
+        String duration = TextFormater.getDataSize(body.getDuration());
+        if (!TextUtils.isEmpty(videoPath) || !TextUtils.isEmpty(thumbPath)) {
+            chatFile.setUserId(toChatUsername);
+            chatFile.setTime(df.format(new Date()));
+            chatFile.setFileType(ChatFileDao.VIDEO_FILE);
+            chatFile.setDuration(size);
+            chatFile.setPath(videoPath);
+            chatFile.setMessageId(message.getMsgId());
+            chatFile.setThumbPath(thumbPath);
+            chatFile.setChatType(message.getChatType().name());
+            dao.saveChatFile(chatFile);
+        }
         sendMessage(message);
     }
 

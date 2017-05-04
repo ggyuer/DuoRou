@@ -25,6 +25,7 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.DateUtils;
+import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.wzq.duorou.ease.widget.EaseConversationList;
 
@@ -96,6 +97,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if (holder == null) {
             holder = new ViewHolder();
+            holder.disturb = (ImageView) convertView.findViewById(R.id.c_disturb);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.unreadLabel = (TextView) convertView.findViewById(R.id.unread_msg_number);
             holder.message = (TextView) convertView.findViewById(R.id.message);
@@ -112,7 +114,13 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         EMConversation conversation = getItem(position);
         // get username or group id
         String username = conversation.conversationId();
-        
+
+        if (MyHelper.getInstance().getDisturbList().containsKey(username)) {
+            holder.disturb.setVisibility(View.VISIBLE);
+        } else {
+            holder.disturb.setVisibility(View.GONE);
+        }
+
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
             if(EaseAtMessageHelper.get().hasAtMeMsg(groupId)){
@@ -302,6 +310,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     }
     
     private static class ViewHolder {
+        ImageView disturb;
         /** who you chat with */
         TextView name;
         /** unread message count */

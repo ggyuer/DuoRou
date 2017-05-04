@@ -19,6 +19,7 @@ public abstract class EaseBaseFragment extends Fragment{
     protected ImageView title_left;
     protected ImageView title_right;
     protected TextView title_name;
+    protected ImageView disturb;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public abstract class EaseBaseFragment extends Fragment{
         titleBar = (EaseTitleBar) getView().findViewById(R.id.title_bar);
         title_left = (ImageView)getView().findViewById(R.id.title_left);
         title_right = (ImageView)getView().findViewById(R.id.title_right);
+        disturb = (ImageView)getView().findViewById(R.id.disturb);
         title_name = (TextView)getView().findViewById(R.id.title_name);
         initView();
         setUpView();

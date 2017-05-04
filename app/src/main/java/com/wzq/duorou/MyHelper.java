@@ -10,11 +10,18 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hyphenate.chat.EMImageMessageBody;
+import com.hyphenate.chat.EMMessageBody;
+import com.hyphenate.chat.EMVideoMessageBody;
+import com.hyphenate.util.TextFormater;
+import com.wzq.duorou.beans.ChatFile;
 import com.wzq.duorou.beans.Disturb;
 import com.wzq.duorou.beans.InviteMessage;
 import com.wzq.duorou.beans.InviteMessage.InviteMesageStatus;
 import com.wzq.duorou.beans.RobotUser;
 import com.wzq.duorou.beans.TopUser;
+import com.wzq.duorou.chat.impl.ChatFileDaoImpl;
+import com.wzq.duorou.chat.model.ChatFileDao;
 import  com.wzq.duorou.chat.model.InviteMessgeDao;
 import  com.wzq.duorou.chat.model.UserDao;
 import  com.wzq.duorou.chat.parse.UserProfileManager;
@@ -52,7 +59,9 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -850,11 +859,64 @@ public class MyHelper {
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
-                    EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
-                    // in background, do not refresh UI, notify it in notification bar
+                    message.setMsgTime(System.currentTimeMillis());
+
+                    /*************消息免打扰***********************/
+                    if (message.getChatType() == ChatType.Chat) {
+                        if (getDisturbList().containsKey(message.getFrom())) {
+                            getModel().setSettingMsgSound(false);
+                            getModel().setSettingMsgVibrate(false);
+                        } else {
+                            getModel().setSettingMsgSound(true);
+                            getModel().setSettingMsgVibrate(true);
+                        }
+                    } else {
+                        getModel().setSettingMsgSound(true);
+                        getModel().setSettingMsgVibrate(true);
+                    }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                     if (!easeUI.hasForegroundActivies()) {
                         getNotifier().onNewMsg(message);
                     }
+
+                    /*******************保存聊天文件***********************/
+                    EMMessageBody body = message.getBody();
+                    String thumbPath = "";
+                    String path = "";
+                    String remotePath = "";
+                    ChatFileDao fileDao = new ChatFileDaoImpl(appContext);
+
+                    ChatFile chatFile = new ChatFile();
+
+                    if (body instanceof EMImageMessageBody) {
+                        path = ((EMImageMessageBody) body).getLocalUrl();
+                        thumbPath = ((EMImageMessageBody) body).thumbnailLocalPath();
+                        remotePath = ((EMImageMessageBody) body).getRemoteUrl();
+                        chatFile.setFileType(ChatFileDao.IMG_FILE);
+                    } else if (body instanceof EMVideoMessageBody) {
+                        path = ((EMVideoMessageBody) body).getLocalUrl();
+                        thumbPath = ((EMVideoMessageBody) body).getLocalThumb();
+                        remotePath = ((EMVideoMessageBody) body).getRemoteUrl();
+                        chatFile.setFileType(ChatFileDao.VIDEO_FILE);
+                        String duration = TextFormater.getDataSize(((EMVideoMessageBody) body).getVideoFileLength());
+                        chatFile.setDuration(duration);
+                        chatFile.setSecret(((EMVideoMessageBody) body).getSecret());
+                    }
+                    if (message.getChatType() == ChatType.GroupChat) {
+                        chatFile.setUserId(message.getTo());
+                    } else {
+                        chatFile.setUserId(message.getFrom());
+                    }
+                    if (!TextUtils.isEmpty(chatFile.getFileType())) {
+                        chatFile.setTime(df.format(new Date()));
+                        chatFile.setMessageId(message.getMsgId());
+                        chatFile.setChatType(message.getChatType().name());
+                        chatFile.setPath(path);
+                        chatFile.setThumbPath(thumbPath);
+                        chatFile.setRemotePath(remotePath);
+                        fileDao.saveChatFile(chatFile);
+                    }
+
                 }
             }
 

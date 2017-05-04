@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.wzq.duorou.utils.PreUtils;
 public abstract class MyBaseActivity extends EaseBaseActivity {
 
 
+    protected Button btnRight;
     protected TextView titleName;
     protected TextView save;
     protected ImageView rightImg;
@@ -42,6 +44,7 @@ public abstract class MyBaseActivity extends EaseBaseActivity {
         save = (TextView) findViewById(R.id.save);
         leftImg = (ImageView) findViewById(R.id.title_left);
         rightImg = (ImageView) findViewById(R.id.title_right);
+        btnRight = (Button) findViewById(R.id.btnRight);
         leftImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
