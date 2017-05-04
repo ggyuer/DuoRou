@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -21,6 +22,7 @@ import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
+import com.hyphenate.easeui.ui.GlideCircleTransform;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
@@ -129,11 +131,17 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 holder.motioned.setVisibility(View.GONE);
             }
             // group message, show group avatar
-            holder.avatar.setImageResource(R.drawable.ease_group_icon);
+            Glide.with(getContext())
+                    .load(com.hyphenate.easeui.R.drawable.groups_icon)
+                    .transform(new GlideCircleTransform(getContext()))
+                    .into(holder.avatar);
             EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
             holder.name.setText(group != null ? group.getGroupName() : username);
         } else if(conversation.getType() == EMConversationType.ChatRoom){
-            holder.avatar.setImageResource(R.drawable.ease_group_icon);
+            Glide.with(getContext())
+                    .load(com.hyphenate.easeui.R.drawable.groups_icon)
+                    .transform(new GlideCircleTransform(getContext()))
+                    .into(holder.avatar);
             EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(username);
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);

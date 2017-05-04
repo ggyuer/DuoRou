@@ -165,6 +165,11 @@
         <activity android:name=".chat.view.activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"/>
+        <activity android:name=".chat.view.activity.ForwardMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".chat.view.activity.PickContactNoCheckboxActivity"/>
     </application>
 
 </manifest>

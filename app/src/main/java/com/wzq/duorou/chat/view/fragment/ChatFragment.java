@@ -1,6 +1,8 @@
 package com.wzq.duorou.chat.view.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -15,11 +17,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
@@ -29,6 +33,7 @@ import com.wzq.duorou.R;
 import com.wzq.duorou.chat.presenter.ChatImpl;
 import com.wzq.duorou.chat.presenter.ChatPresenter;
 import com.wzq.duorou.chat.view.IChatView;
+import com.wzq.duorou.chat.view.activity.ForwardMessageActivity;
 import com.wzq.duorou.chat.view.activity.ImageGridActivity;
 import com.wzq.duorou.activitys.MainActivity;
 import com.wzq.duorou.beans.RobotUser;
@@ -129,28 +134,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CONTEXT_MENU) {
-            switch (resultCode) {
-//            case ContextMenuActivity.RESULT_CODE_COPY: // copy
-//                clipboard.setPrimaryClip(ClipData.newPlainText(null,
-//                        ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
-//                break;
-//            case ContextMenuActivity.RESULT_CODE_DELETE: // delete
-//                conversation.removeMessage(contextMenuMessage.getMsgId());
-//                messageList.refresh();
-//                break;
-//
-//            case ContextMenuActivity.RESULT_CODE_FORWARD: // forward
-//                Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
-//                intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
-//                startActivity(intent);
-//
-//                break;
-
-                default:
-                    break;
-            }
-        }
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_SELECT_VIDEO: //send the video
@@ -251,10 +234,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     public void onMessageBubbleLongClick(EMMessage message) {
-        // no message forward when in chat room
-//        startActivityForResult((new Intent(getActivity(), ContextMenuActivity.class)).putExtra("message",message)
-//                .putExtra("ischatroom", chatType == EaseConstant.CHATTYPE_CHATROOM),
-//                REQUEST_CODE_CONTEXT_MENU);
+        showDialog();
     }
 
     @Override
@@ -342,5 +322,51 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         } else {
             disturb.setVisibility(View.GONE);
         }
+    }
+
+    private AlertDialog dialog;
+    public void showDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.chat_long_click_dialog, null);
+        Button copy = (Button) view.findViewById(R.id.top);
+        copy.setText("复制消息");
+        Button delete = (Button) view.findViewById(R.id.center);
+        delete.setText("删除消息");
+        Button forward = (Button) view.findViewById(R.id.bottom);
+        forward.setText("转发消息");
+
+        copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clipboard.setPrimaryClip(ClipData.newPlainText(null,
+                        ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
+                Toast.makeText(getActivity(),"复制成功！",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                conversation.removeMessage(contextMenuMessage.getMsgId());
+                messageList.refresh();
+                Toast.makeText(getActivity(),"删除成功！",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
+                intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
     }
 }

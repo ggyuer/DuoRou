@@ -8,6 +8,7 @@
 
     <RelativeLayout
         android:id="@+id/title"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/top_bar_normal_bg"
@@ -36,6 +37,8 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
+    <include layout="@layout/reuse_view_title_top"/>
+
     <EditText
         android:id="@+id/edit_note"
         android:layout_width="match_parent"
@@ -46,7 +49,7 @@
         android:hint="@string/user_name"
         android:singleLine="true"
         android:textColorHint="#b3b3b3"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <RelativeLayout
         android:id="@+id/ll_user"

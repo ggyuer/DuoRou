@@ -16,9 +16,9 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
-import com.wzq.duorou.base.BaseActivity;
+import com.wzq.duorou.base.MyBaseActivity;
 
-public class AddContactActivity extends BaseActivity {
+public class AddContactActivity extends MyBaseActivity {
 	private EditText editText;
 	private RelativeLayout searchedUserLayout;
 	private TextView nameText;
@@ -30,23 +30,32 @@ public class AddContactActivity extends BaseActivity {
 		return new Intent(activity,AddContactActivity.class);
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.em_activity_add_contact);
-		TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
-		
-		editText = (EditText) findViewById(R.id.edit_note);
-		String strAdd = getResources().getString(R.string.add_friend);
-		mTextView.setText(strAdd);
-		String strUserName = getResources().getString(R.string.user_name);
-		editText.setHint(strUserName);
-		searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
-		nameText = (TextView) findViewById(R.id.name);
-		searchBtn = (Button) findViewById(R.id.search);
-	}
-	
-	
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected int initLayoutId() {
+        return R.layout.em_activity_add_contact;
+    }
+
+    @Override
+    protected void initView() {
+        titleName.setText("添加好友");
+        leftImg.setVisibility(View.VISIBLE);
+        TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
+        editText = (EditText) findViewById(R.id.edit_note);
+        String strAdd = getResources().getString(R.string.add_friend);
+        mTextView.setText(strAdd);
+        String strUserName = getResources().getString(R.string.user_name);
+        editText.setHint(strUserName);
+        searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
+        nameText = (TextView) findViewById(R.id.name);
+        searchBtn = (Button) findViewById(R.id.search);
+    }
+
 	/**
 	 * search contact
 	 * @param v

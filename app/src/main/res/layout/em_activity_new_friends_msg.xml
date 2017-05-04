@@ -7,6 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/title"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/top_bar_normal_bg"
@@ -22,6 +23,8 @@
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
+
+    <include layout="@layout/reuse_view_title_top"/>
 
     <ListView
         android:id="@+id/list"
