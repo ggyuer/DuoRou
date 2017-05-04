@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.wzq.duorou.chat.model.ChatFileDao;
 import com.wzq.duorou.chat.model.DisturbDao;
+import com.wzq.duorou.chat.model.GroupNickDao;
 import com.wzq.duorou.chat.model.InviteMessgeDao;
 import com.wzq.duorou.chat.model.TopUserDao;
 import com.wzq.duorou.chat.model.UserDao;
@@ -115,6 +116,16 @@ public class DBHelper extends SQLiteOpenHelper {
             + DisturbDao.TABLE_NAME + " ("
             + DisturbDao.USER_ID + " TEXT PRIMARY KEY);";
 
+    /**
+     * 用户的群昵称
+     */
+    private static final String SHOW_NICK_TABLE_CREATE = "CREATE TABLE "
+            + GroupNickDao.TABLE_NAME + " ("
+            + GroupNickDao.SHOW_GROUP_ID + " TEXT, "
+            + GroupNickDao.SHOW_USER_ID + " TEXT, "
+            + GroupNickDao.SHOW_GROUP_NICK + " TEXT, "
+            + GroupNickDao.SHOW_USER_NICK + " TEXT);";
+
     private DBHelper(Context context) {
         super(context, DBNAME, null, DATABASE_VERSION);
     }
@@ -144,6 +155,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(TOP_TABLE_CREATE);
         db.execSQL(DISTURB_TABLE_CREATE);
         db.execSQL(CHAT_FILE_TABLE_CREATE);
+        db.execSQL(SHOW_NICK_TABLE_CREATE);
     }
 
     @Override

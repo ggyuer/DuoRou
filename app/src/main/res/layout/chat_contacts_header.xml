@@ -11,6 +11,10 @@
         android:layout_height="wrap_content"
         app:contactItemImage="@drawable/public_room"
         app:contactItemName="@string/Application_and_notify" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/line"/>
 
     <com.wzq.duorou.widget.ContactItemView
         android:id="@+id/add_friend"

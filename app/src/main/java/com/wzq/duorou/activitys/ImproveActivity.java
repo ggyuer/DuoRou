@@ -152,7 +152,7 @@ public class ImproveActivity extends MyBaseActivity implements View.OnClickListe
                             pd.dismiss();
                             Toast.makeText(ImproveActivity.this, getString(R.string.toast_updatenick_success), Toast.LENGTH_SHORT)
                                     .show();
-                           PreferenceManager.getInstance().setValueToPrefrences(Constant.USER_NICK_NAME,"");
+                           PreferenceManager.getInstance().setValueToPrefrences(Constant.USER_NICK_NAME,nickName);
                             PreferenceManager.getInstance().setIsNeed(1);
                             Intent intent  = new Intent(ImproveActivity.this,MainActivity.class);
                             startActivity(intent);

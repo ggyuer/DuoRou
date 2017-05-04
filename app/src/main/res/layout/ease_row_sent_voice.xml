@@ -24,26 +24,39 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/margin_chat_activity"
-            android:background="@drawable/ease_default_avatar"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop" />
 
-        <RelativeLayout 
-            android:id="@+id/bubble"
+        <TextView
+            android:id="@+id/nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/iv_userhead"
+            android:textColor="#b4b2b2"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_toLeftOf="@id/iv_userhead"
+            android:layout_below="@+id/nickName"
             android:layout_marginRight="10dp"
-             android:background="@drawable/ease_chatto_bg"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/ease_chatto_bg"
             >
-	        <ImageView
-	            android:id="@+id/iv_voice"
-	            android:layout_centerInParent="true"
-	            android:paddingLeft="12dp"
-	            android:paddingRight="10dp"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:src="@drawable/ease_chatto_voice_playing" />
-		</RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_voice"
+                android:layout_centerInParent="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/ease_chatto_voice_playing" />
+        </RelativeLayout>
         <TextView
             android:id="@+id/tv_length"
             style="@style/chat_text_name_style"
@@ -52,17 +65,17 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/bubble"
             android:gravity="center" />
-        
+
         <ImageView
             android:id="@+id/msg_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_length"
             android:clickable="true"
             android:src="@drawable/ease_msg_state_failed_resend"
-            android:visibility="gone" />
-        
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/tv_ack"
             style="@style/chat_text_name_style"
@@ -85,12 +98,12 @@
             android:layout_toLeftOf="@id/tv_length"
             android:visibility="invisible"
             />
-          <ProgressBar 
+        <ProgressBar
             android:visibility="visible"
             android:id="@+id/progress_bar"
             android:layout_width="25dp"
             android:layout_height="25dp"
-              android:layout_centerVertical="true"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_length"
             />
     </RelativeLayout>

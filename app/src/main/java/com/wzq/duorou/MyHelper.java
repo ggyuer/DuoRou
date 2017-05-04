@@ -10,26 +10,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.hyphenate.chat.EMImageMessageBody;
-import com.hyphenate.chat.EMMessageBody;
-import com.hyphenate.chat.EMVideoMessageBody;
-import com.hyphenate.util.TextFormater;
-import com.wzq.duorou.beans.ChatFile;
-import com.wzq.duorou.beans.Disturb;
-import com.wzq.duorou.beans.InviteMessage;
-import com.wzq.duorou.beans.InviteMessage.InviteMesageStatus;
-import com.wzq.duorou.beans.RobotUser;
-import com.wzq.duorou.beans.TopUser;
-import com.wzq.duorou.chat.impl.ChatFileDaoImpl;
-import com.wzq.duorou.chat.model.ChatFileDao;
-import  com.wzq.duorou.chat.model.InviteMessgeDao;
-import  com.wzq.duorou.chat.model.UserDao;
-import  com.wzq.duorou.chat.parse.UserProfileManager;
-import  com.wzq.duorou.chat.receiver.CallReceiver;
-import com.wzq.duorou.chat.view.activity.ChatActivity;
-import  com.wzq.duorou.activitys.MainActivity;
-import com.wzq.duorou.db.DBManager;
-import  com.wzq.duorou.utils.PreferenceManager;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
@@ -40,12 +20,15 @@ import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
+import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMMessage.Status;
 import com.hyphenate.chat.EMMessage.Type;
+import com.hyphenate.chat.EMMessageBody;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.controller.EaseUI.EaseEmojiconInfoProvider;
 import com.hyphenate.easeui.controller.EaseUI.EaseSettingsProvider;
@@ -58,6 +41,25 @@ import com.hyphenate.easeui.model.EaseNotifier.EaseNotificationInfoProvider;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
+import com.hyphenate.util.TextFormater;
+import com.wzq.duorou.activitys.MainActivity;
+import com.wzq.duorou.beans.ChatFile;
+import com.wzq.duorou.beans.Disturb;
+import com.wzq.duorou.beans.GroupNick;
+import com.wzq.duorou.beans.InviteMessage;
+import com.wzq.duorou.beans.InviteMessage.InviteMesageStatus;
+import com.wzq.duorou.beans.RobotUser;
+import com.wzq.duorou.beans.TopUser;
+import com.wzq.duorou.chat.impl.ChatFileDaoImpl;
+import com.wzq.duorou.chat.model.ChatFileDao;
+import com.wzq.duorou.chat.model.GroupNickDao;
+import com.wzq.duorou.chat.model.InviteMessgeDao;
+import com.wzq.duorou.chat.model.UserDao;
+import com.wzq.duorou.chat.parse.UserProfileManager;
+import com.wzq.duorou.chat.receiver.CallReceiver;
+import com.wzq.duorou.chat.view.activity.ChatActivity;
+import com.wzq.duorou.db.DBManager;
+import com.wzq.duorou.utils.PreferenceManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -144,6 +146,44 @@ public class MyHelper {
             instance = new MyHelper();
         }
         return instance;
+    }
+
+    /*************
+     * show group nick
+     **************/
+    public boolean getIsShow() {
+        return PreferenceManager.getInstance().getValueFromBoolean(Constant.IS_SHOW_NICK, false);
+    }
+
+    public void setIsShow(boolean flag) {
+        PreferenceManager.getInstance().setValueToBoolean(Constant.IS_SHOW_NICK, flag);
+    }
+
+    /*************
+     * GroupNick
+     **************/
+    private Map<String, String> allShowNick;
+
+    public long setShowNick(GroupNick nick) {
+        if (nick != null) {
+            if (allShowNick.containsKey(nick.getUserId() + nick.getGroupId())) {
+                allShowNick.remove(nick.getUserId() + nick.getGroupId());
+            }
+            if (!TextUtils.isEmpty(nick.getGroupNick())) {
+                allShowNick.put(nick.getUserId() + nick.getGroupId(), nick.getGroupNick());
+            } else {
+                allShowNick.put(nick.getUserId() + nick.getGroupId(), nick.getUserNick());
+            }
+            return getModel().saveShowNick(nick);
+        }
+        return 0;
+    }
+
+    public Map<String, String> getShowNick() {
+        if (allShowNick == null) {
+            allShowNick = getModel().getAllShowNick();
+        }
+        return allShowNick;
     }
 
     /*************
@@ -925,8 +965,16 @@ public class MyHelper {
                 for (EMMessage message : messages) {
 
                     EMCmdMessageBody cmdMsgBody = (EMCmdMessageBody) message.getBody();
-                    final String action = cmdMsgBody.action();//获取自定义action
-
+                    String action = cmdMsgBody.action();//获取自定义action
+                    if (action.equals(GroupNickDao.SHOW_NICK_ACTION)) {
+                        /******************我在本群昵称变化通知*******************/
+                        String userName = message.getFrom();
+                        String userNick = message.getStringAttribute(Constant.USER_NICK_NAME, "");
+                        String groupId = message.getTo();
+                        String content = message.getStringAttribute(GroupNickDao.SHOW_GROUP_NICK, "");
+                        GroupNick showNick = new GroupNick(userName, groupId, userNick, content);
+                        setShowNick(showNick);
+                    }
                 }
             }
 

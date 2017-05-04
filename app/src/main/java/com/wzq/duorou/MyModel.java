@@ -5,11 +5,14 @@ import android.content.Context;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.wzq.duorou.beans.Disturb;
+import com.wzq.duorou.beans.GroupNick;
 import com.wzq.duorou.beans.RobotUser;
 import com.wzq.duorou.beans.TopUser;
 import com.wzq.duorou.chat.impl.DisturbDaoImpl;
 import com.wzq.duorou.chat.impl.TopUserDaoImpl;
 import com.wzq.duorou.chat.model.DisturbDao;
+import com.wzq.duorou.chat.model.GroupNickDao;
+import com.wzq.duorou.chat.model.GroupNickDaoImpl;
 import com.wzq.duorou.chat.model.TopUserDao;
 import com.wzq.duorou.chat.model.UserDao;
 import com.wzq.duorou.utils.PreferenceManager;
@@ -305,6 +308,19 @@ public class MyModel {
         SpakerOn,
         DisabledGroups,
         DisabledIds
+    }
+
+
+    /***************群显示群成员自定义昵称*******************/
+
+    public long saveShowNick(GroupNick showNick){
+        GroupNickDao dao = new GroupNickDaoImpl(context);
+        return dao.saveShowNick(showNick);
+    }
+
+    public Map<String,String> getAllShowNick(){
+        GroupNickDao dao = new GroupNickDaoImpl(context);
+        return dao.queryAllShowNick();
     }
 
     /**

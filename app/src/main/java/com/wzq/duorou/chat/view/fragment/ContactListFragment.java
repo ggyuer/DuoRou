@@ -35,7 +35,9 @@ import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.wzq.duorou.chat.model.InviteMessgeDao;
 import com.wzq.duorou.chat.model.UserDao;
+import com.wzq.duorou.chat.view.activity.AddContactActivity;
 import com.wzq.duorou.chat.view.activity.ChatActivity;
+import com.wzq.duorou.chat.view.activity.NewFriendsMsgActivity;
 import com.wzq.duorou.ease.ui.EaseContactListFragment;
 import com.wzq.duorou.widget.ContactItemView;
 
@@ -179,10 +181,12 @@ public class ContactListFragment extends EaseContactListFragment {
                 case R.id.application_item:
                     // 进入申请与通知页面
                     // startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
+                    startActivity(NewFriendsMsgActivity.getInstance(getActivity()));
                     break;
                 case R.id.add_friend:
                     // 进入群聊列表页面
                     // startActivity(new Intent(getActivity(), GroupsActivity.class));
+                    startActivity(AddContactActivity.getInstance(getActivity()));
                     break;
 
                 default:

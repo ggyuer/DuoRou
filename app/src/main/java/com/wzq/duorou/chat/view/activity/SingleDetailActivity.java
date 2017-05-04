@@ -90,9 +90,9 @@ public class SingleDetailActivity extends MyBaseActivity implements ISingleDetai
                 startActivity(chatFile);
                 break;
             case R.id.singleFindContent:
-//                Intent intent = AllSearchMessageActivity.newInstance(this);
-//                intent.putExtra(Constant.USER_HX_ID, getToChatUserName());
-//                startActivity(intent);
+                Intent intent = AllSearchMessageActivity.newInstance(this);
+                intent.putExtra(Constant.USER_HX_ID, getUserName());
+                startActivity(intent);
                 break;
             case R.id.singleClearRecord:
                 presenter.clearRecord(getUserName());

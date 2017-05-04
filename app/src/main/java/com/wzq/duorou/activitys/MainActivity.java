@@ -272,11 +272,12 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
 
-    private InviteMessgeDao  inviteMessgeDao = new InviteMessgeDao(this);
+    private InviteMessgeDao  inviteMessgeDao;
 
     public void chatAbout() {
         unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
+        inviteMessgeDao = new InviteMessgeDao(this);
         showExceptionDialogFromIntent(getIntent());
         registerBroadcastReceiver();
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
@@ -615,12 +616,12 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
             public void onReceive(Context context, Intent intent) {
                 updateUnreadLabel();
                 updateUnreadAddressLable();
-                if (currentTabIndex == 0) {
+                if (currentTabIndex == 9) {
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
                     }
-                } else if (currentTabIndex == 1) {
+                } else if (currentTabIndex == 6) {
                     if (contactListFragment != null) {
                         contactListFragment.refresh();
                     }
@@ -651,7 +652,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
                     }
                 }
             });
-            // updateUnreadAddressLable();
+            updateUnreadAddressLable();
         }
 
         @Override
@@ -705,7 +706,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
             public void run() {
                 // refresh unread count
                 updateUnreadLabel();
-                if (currentTabIndex == 2) {
+                if (currentTabIndex == 9) {
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();

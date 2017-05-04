@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="20dp">
+
+    <TextView
+        style="@style/first_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我的群昵称"/>
+
+    <EditText
+        android:id="@+id/nickNameForThisGroup"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@null"
+        android:focusable="true"
+        android:paddingLeft="3dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/first_font_color"
+        android:textCursorDrawable="@drawable/chat_edittext_cursour_shape"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#1aad16" />
+
+    <TextView
+        style="@style/second_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="13dp"
+        android:text="@string/group_dialog_context" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="44dp"
+            android:layout_height="32dp"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="#666"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/sure"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="44dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="6dp"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/ok"
+            android:textColor="#1aad16"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

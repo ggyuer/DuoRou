@@ -2,10 +2,12 @@ package com.wzq.duorou.ease.widget.chatrow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMLocationMessageBody;
@@ -19,6 +21,7 @@ public class EaseChatRowLocation extends EaseChatRow {
 
     private TextView locationView;
     private EMLocationMessageBody locBody;
+    private TextView nickName;
 
 	public EaseChatRowLocation(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context, message, position, adapter);
@@ -33,6 +36,7 @@ public class EaseChatRowLocation extends EaseChatRow {
     @Override
     protected void onFindViewById() {
     	locationView = (TextView) findViewById(R.id.tv_location);
+        nickName = (TextView) findViewById(R.id.nickName);
     }
 
 
@@ -40,6 +44,29 @@ public class EaseChatRowLocation extends EaseChatRow {
     protected void onSetUpView() {
 		locBody = (EMLocationMessageBody) message.getBody();
 		locationView.setText(locBody.getAddress());
+
+        if (message.direct() == EMMessage.Direct.RECEIVE &&
+                message.getChatType() == ChatType.GroupChat &&
+                MyHelper.getInstance().getIsShow()) {
+            nickName.setVisibility(View.VISIBLE);
+            String userName = message.getFrom();
+            String groupId = message.getTo();
+            String groupNick = MyHelper.getInstance().getShowNick().get(userName+groupId);
+            if (!TextUtils.isEmpty(groupNick)){
+                nickName.setText(groupNick);
+            }else {
+                if (MyHelper.getInstance().getContactList().containsKey(userName)) {
+                    String nick = MyHelper.getInstance().getContactList().get(userName).getNickname();
+                    nickName.setText(nick);
+                } else {
+//                    String nick = MyHelper.getInstance().getOtherUser().get(userName).getUserNick();
+//                    nickName.setText(nick);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        } else {
+            nickName.setVisibility(View.GONE);
+        }
 
 		// handle sending message
 		if (message.direct() == EMMessage.Direct.SEND) {

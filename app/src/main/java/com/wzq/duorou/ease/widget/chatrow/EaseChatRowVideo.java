@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.wzq.duorou.widget.ChatImageView;
 import com.hyphenate.chat.EMClient;
@@ -30,6 +33,7 @@ public class EaseChatRowVideo extends EaseChatRowFile {
 	private ChatImageView imageView;
     private TextView sizeView;
     private TextView timeLengthView;
+    private TextView nickName;
 
     public EaseChatRowVideo(Context context, EMMessage message, int position, BaseAdapter adapter) {
 		super(context, message, position, adapter);
@@ -46,6 +50,7 @@ public class EaseChatRowVideo extends EaseChatRowFile {
 	    imageView = ((ChatImageView) findViewById(R.id.chatting_content_iv));
         sizeView = (TextView) findViewById(R.id.chatting_size_iv);
         timeLengthView = (TextView) findViewById(R.id.chatting_length_iv);
+        nickName = (TextView) findViewById(R.id.nickName);
         ImageView playView = (ImageView) findViewById(R.id.chatting_status_btn);
         percentageView = (TextView) findViewById(R.id.percentage);
 	}
@@ -74,6 +79,29 @@ public class EaseChatRowVideo extends EaseChatRowFile {
                 String size = TextFormater.getDataSize(new File(videoBody.getLocalUrl()).length());
                 sizeView.setText(size);
             }
+        }
+
+        if (message.direct() == EMMessage.Direct.RECEIVE &&
+                message.getChatType() == ChatType.GroupChat &&
+                MyHelper.getInstance().getIsShow()) {
+            nickName.setVisibility(View.VISIBLE);
+            String userName = message.getFrom();
+            String groupId = message.getTo();
+            String groupNick = MyHelper.getInstance().getShowNick().get(userName+groupId);
+            if (!TextUtils.isEmpty(groupNick)){
+                nickName.setText(groupNick);
+            }else {
+                if (MyHelper.getInstance().getContactList().containsKey(userName)) {
+                    String nick = MyHelper.getInstance().getContactList().get(userName).getNickname();
+                    nickName.setText(nick);
+                } else {
+//                    String nick = MyHelper.getInstance().getOtherUser().get(userName).getUserNick();
+//                    nickName.setText(nick);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        } else {
+            nickName.setVisibility(View.GONE);
         }
 
         EMLog.d(TAG,  "video thumbnailStatus:" + videoBody.thumbnailDownloadStatus());

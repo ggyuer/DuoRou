@@ -2,11 +2,13 @@ package com.wzq.duorou.ease.widget.chatrow;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
@@ -17,6 +19,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     private ImageView voiceImageView;
     private TextView voiceLengthView;
+    private TextView nickName;
     private ImageView readStatusView;
 
     public EaseChatRowVoice(Context context, EMMessage message, int position, BaseAdapter adapter) {
@@ -33,6 +36,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     protected void onFindViewById() {
         voiceImageView = ((ImageView) findViewById(R.id.iv_voice));
         voiceLengthView = (TextView) findViewById(R.id.tv_length);
+        nickName = (TextView) findViewById(R.id.nickName);
         readStatusView = (ImageView) findViewById(R.id.iv_unread_voice);
     }
 
@@ -63,7 +67,30 @@ public class EaseChatRowVoice extends EaseChatRowFile {
                 voiceImageView.setImageResource(R.drawable.ease_chatto_voice_playing);
             }
         }
-        
+
+        if (message.direct() == EMMessage.Direct.RECEIVE &&
+                message.getChatType() == EMMessage.ChatType.GroupChat &&
+                MyHelper.getInstance().getIsShow()) {
+            nickName.setVisibility(View.VISIBLE);
+            String userName = message.getFrom();
+            String groupId = message.getTo();
+            String groupNick = MyHelper.getInstance().getShowNick().get(userName+groupId);
+            if (!TextUtils.isEmpty(groupNick)){
+                nickName.setText(groupNick);
+            }else {
+                if (MyHelper.getInstance().getContactList().containsKey(userName)) {
+                    String nick = MyHelper.getInstance().getContactList().get(userName).getNickname();
+                    nickName.setText(nick);
+                } else {
+//                    String nick = MyHelper.getInstance().getOtherUser().get(userName).getUserNick();
+//                    nickName.setText(nick);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        } else {
+            nickName.setVisibility(View.GONE);
+        }
+
         if (message.direct() == EMMessage.Direct.RECEIVE) {
             if (message.isListened()) {
                 // hide the unread icon

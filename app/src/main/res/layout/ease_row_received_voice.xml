@@ -25,26 +25,37 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:background="@drawable/ease_default_avatar"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop" />
 
+        <TextView
+            android:id="@+id/nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/iv_userhead"
+            android:textColor="#b4b2b2"
+            android:textSize="11sp"
+            android:visibility="gone" />
         <RelativeLayout
             android:id="@+id/bubble"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/iv_userhead"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:layout_below="@+id/tv_userid"
+            android:layout_below="@+id/nickName"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/ease_chatfrom_bg"
             >
 
             <ImageView
                 android:id="@+id/iv_voice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-	            android:paddingRight="12dp"
-	            android:layout_centerInParent="true"
+                android:layout_height="20dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="12dp"
+                android:layout_centerInParent="true"
                 android:src="@drawable/ease_chatfrom_voice_playing" />
         </RelativeLayout>
 
@@ -78,7 +89,7 @@
             android:layout_toRightOf="@id/iv_unread_voice"
             android:visibility="invisible" />
 
-         <TextView
+        <TextView
             android:id="@+id/tv_userid"
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"

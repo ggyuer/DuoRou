@@ -1,34 +1,44 @@
 package com.wzq.duorou.chat.view.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseExpandGridView;
 import com.hyphenate.exceptions.HyphenateException;
+import com.wzq.duorou.App;
 import com.wzq.duorou.Constant;
+import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.wzq.duorou.base.MyBaseActivity;
+import com.wzq.duorou.beans.Disturb;
+import com.wzq.duorou.beans.GroupNick;
+import com.wzq.duorou.beans.TopUser;
 import com.wzq.duorou.utils.PreferenceManager;
+import com.wzq.duorou.utils.SendMessageTool;
+import com.wzq.duorou.widget.AlertDialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class GroupDetailActivity extends MyBaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class GroupDetailActivity extends MyBaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "GroupDetailsActivity";
     private String groupId;
@@ -110,11 +120,18 @@ public class GroupDetailActivity extends MyBaseActivity implements View.OnClickL
         String userName = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID, null);
         rl_invite = (RelativeLayout) findViewById(R.id.groupCanInviteFriend);
         rl_addfriend = (RelativeLayout) findViewById(R.id.groupCanAddFriend);
+        titleName.setText(group.getGroupName()+"("+group.getMembers()+")");
         if (userName.equals(EMClient.getInstance().getCurrentUser())) {
-            rl_invite.setVisibility(View.VISIBLE);
-            rl_addfriend.setVisibility(View.VISIBLE);
+            //rl_invite.setVisibility(View.VISIBLE);
+            //rl_addfriend.setVisibility(View.VISIBLE);
+            exitBtn.setVisibility(View.GONE);
+            dismissBtn.setVisibility(View.VISIBLE);
             adapter = new GroupMemberAdapter(getMemmber(), true);
         } else {
+            exitBtn.setVisibility(View.VISIBLE);
+            dismissBtn.setVisibility(View.GONE);
+            //rl_addfriend.setVisibility(View.GONE);
+            //rl_invite.setVisibility(View.GONE);
             adapter = new GroupMemberAdapter(getMemmber(), false);
         }
         gridView.setAdapter(adapter);
@@ -139,6 +156,61 @@ public class GroupDetailActivity extends MyBaseActivity implements View.OnClickL
             }
         });
         groupId = getIntent().getStringExtra("groupId");
+        isShow();
+        initData();
+    }
+
+    public void isShow() {
+        if (MyHelper.getInstance().getDisturbList().containsKey(groupId)) {
+            tog_block_message.setChecked(true);
+        } else {
+            tog_block_message.setChecked(false);
+        }
+
+        if (App.getInstance().getTopUserList().containsKey(groupId)) {
+            tog_topchat_detail.setChecked(true);
+        } else {
+            tog_topchat_detail.setChecked(false);
+        }
+
+        if (MyHelper.getInstance().getIsShow()) {
+            tog_nickname_detail.setChecked(true);
+        } else {
+            tog_nickname_detail.setChecked(false);
+        }
+    }
+
+    private void initData() {
+//        groupBean = dao.getGroupBean(groupId);
+//        if (groupBean != null) {
+//            if (!TextUtils.isEmpty(groupBean.getName())) {
+//                titleName.setText(groupBean.getName() + "( " + groupBean.getMembers_count() + " )");
+//                tv_group_name.setText(groupBean.getName());
+//            }
+//            if (!TextUtils.isEmpty(groupBean.getDescription())) {
+//                rl_group_desc.setVisibility(View.VISIBLE);
+//                tv_group_desc.setText(groupBean.getDescription());
+//            }
+//            if (groupBean.getAllow_be_friend().equals("1")) {
+//                tog_add_friend.setChecked(true);
+//            }
+//            if (groupBean.getIs_public().equals("1")) {
+//                tog_public.setChecked(true);
+//            }
+//            if (groupBean.getAllow_invite().equals("1")) {
+//                tog_invite.setChecked(true);
+//            }
+//
+//        }
+//
+        String username = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID, "");
+        String userNick = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_NICK_NAME, "");
+        String groupNickName = MyHelper.getInstance().getShowNick().get(username + groupId);
+        if (!TextUtils.isEmpty(groupNickName)) {
+            tv_group_nick_value.setText(groupNickName);
+        } else {
+            tv_group_nick_value.setText(userNick);
+        }
 
     }
 
@@ -147,9 +219,165 @@ public class GroupDetailActivity extends MyBaseActivity implements View.OnClickL
 
     }
 
-    @Override
-    public void onClick(View v) {
+    /**
+     * 修改我的群昵称
+     */
+    public void editGroupNickName() {
+        final Button cancel, sure;
+        final Dialog dialog = new Dialog(GroupDetailActivity.this, R.style.Dialog);
+        dialog.setContentView(R.layout.chat_group_nick_view);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        final EditText nickNameForThisGroup = (EditText) dialog.findViewById(R.id.nickNameForThisGroup);
+        final String groupNickName = tv_group_nick_value.getText().toString().trim();
+        if (!TextUtils.isEmpty(groupNickName)) {
+            nickNameForThisGroup.setText(groupNickName);
+            nickNameForThisGroup.setSelection(groupNickName.length());
+        }
 
+        cancel = (Button) dialog.findViewById(R.id.cancel);
+        sure = (Button) dialog.findViewById(R.id.sure);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nickNameForGroup = nickNameForThisGroup.getText().toString().trim();
+                if (TextUtils.isEmpty(nickNameForGroup)) {
+                    showToast("输入不能为空！");
+                    return;
+                }
+                if (groupNickName.equals(nickNameForGroup)) {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    return;
+                }
+                tv_group_nick_value.setText(nickNameForGroup);
+                String username = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_HX_ID, "");
+                String userNick = PreferenceManager.getInstance().getValueFromPreferences(Constant.USER_NICK_NAME, "");
+                GroupNick nick = new GroupNick(username, groupId, userNick, nickNameForGroup);
+                if (MyHelper.getInstance().setShowNick(nick) >= 0) {
+                    showToast("修改成功！");
+                    SendMessageTool.sendCmdShowNickMessage(nickNameForGroup,userNick, groupId);
+                } else {
+                    showToast("修改失败！");
+                }
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    public void execute(View v){
+        switch (v.getId()){
+            case R.id.groupMessageFree:
+                if (tog_block_message.isChecked()) {
+                    tog_block_message.setChecked(false);
+                    MyHelper.getInstance().deleteDisturb(groupId);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                EMClient.getInstance().groupManager().unblockGroupMessage(groupId);//需异步处理
+                            } catch (HyphenateException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                } else {
+                    tog_block_message.setChecked(true);
+                    Disturb disturb = new Disturb();
+                    disturb.setUserId(groupId);
+                    MyHelper.getInstance().saveDisturb(disturb);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                EMClient.getInstance().groupManager().blockGroupMessage(groupId);//需异步处理
+                            } catch (HyphenateException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
+                break;
+            case R.id.groupShowMemberNick:
+                if (tog_nickname_detail.isChecked()) {
+                    tog_nickname_detail.setChecked(false);
+                    MyHelper.getInstance().setIsShow(false);
+                } else {
+                    tog_nickname_detail.setChecked(true);
+                    MyHelper.getInstance().setIsShow(true);
+                }
+                break;
+            case R.id.groupTopChat:
+                if (tog_topchat_detail.isChecked()) {
+                    tog_topchat_detail.setChecked(false);
+                    App.getInstance().deleteTopUser(groupId);
+                } else {
+                    tog_topchat_detail.setChecked(true);
+                    TopUser user = new TopUser();
+                    user.setUserName(groupId);
+                    user.setTime(System.currentTimeMillis());
+                    App.getInstance().setTopUser(user);
+                }
+                break;
+            case R.id.groupMyNick:
+                editGroupNickName();
+                break;
+            case R.id.groupSearchMessage:
+                Intent data = AllSearchMessageActivity.newInstance(this);
+                data.putExtra(Constant.USER_HX_ID, groupId);
+                startActivity(data);
+                break;
+            case R.id.groupClearMessage:
+                String msg = getResources().getString(com.hyphenate.easeui.R.string.Whether_to_empty_all_chats);
+                new AlertDialog(this, null, msg, null, new AlertDialog.AlertDialogUser() {
+
+                    @Override
+                    public void onResult(boolean confirmed, Bundle bundle) {
+                        if (confirmed) {
+                            clearGroupHistory();
+                        }
+                    }
+                }, true).show();
+                break;
+            case R.id.groupMassageFile:
+                Intent chatIntent = ChatFileActivity.newInstance(this);
+                chatIntent.putExtra(Constant.USER_HX_ID, groupId);
+                startActivity(chatIntent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        setResult(Activity.RESULT_OK);
+        finish();
+        return false;
+    }
+
+    /**
+     * 清空群聊天记录
+     */
+    private void clearGroupHistory() {
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(groupId,
+                EMConversation.EMConversationType.GroupChat);
+        if (conversation != null) {
+            conversation.clearAllMessages();
+        }
+        Toast.makeText(this, "清除成功！", Toast.LENGTH_SHORT).show();
     }
 
     class GroupMemberAdapter extends BaseAdapter {

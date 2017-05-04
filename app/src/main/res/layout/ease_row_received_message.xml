@@ -29,14 +29,15 @@
 
         <TextView
             android:id="@+id/nickName"
-            android:layout_marginLeft="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/iv_userhead"
-            android:textColor="@color/reuse_main_color"
-            android:textSize="12sp"
-            android:visibility="gone"
-            android:text="我的昵称"/>
+            android:textColor="#b4b2b2"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/bubble"
