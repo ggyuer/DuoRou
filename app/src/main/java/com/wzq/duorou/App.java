@@ -11,7 +11,9 @@ import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.common.QueuedWork;
 import com.wzq.duorou.beans.TopUser;
+import com.wzq.duorou.beans.TopicUser;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -116,4 +118,5 @@ public class App extends Application {
     public long setTopUser(TopUser user) {
         return MyHelper.getInstance().setTopUser(user);
     }
+
 }

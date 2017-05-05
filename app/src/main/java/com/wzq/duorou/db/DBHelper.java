@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wzq.duorou.beans.TopicUser;
 import com.wzq.duorou.chat.model.ChatFileDao;
 import com.wzq.duorou.chat.model.DisturbDao;
 import com.wzq.duorou.chat.model.GroupNickDao;
@@ -54,6 +55,12 @@ public class DBHelper extends SQLiteOpenHelper {
             + UserDao.ROBOT_COLUMN_NAME_ID + " TEXT PRIMARY KEY, "
             + UserDao.ROBOT_COLUMN_NAME_NICK + " TEXT, "
             + UserDao.ROBOT_COLUMN_NAME_AVATAR + " TEXT);";
+
+    private static final String TOPIC_USER = "CREATE TABLE "
+            + TopicUserDao.NAME + " ("
+            + TopicUserDao.AVATAR + " TEXT, "
+            + TopicUserDao.NICK + " TEXT, "
+            + TopicUserDao.CONTENT + " TEXT);";
 
     private static final String CREATE_PREF_TABLE = "CREATE TABLE "
             + UserDao.PREF_TABLE_NAME + " ("
@@ -156,6 +163,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DISTURB_TABLE_CREATE);
         db.execSQL(CHAT_FILE_TABLE_CREATE);
         db.execSQL(SHOW_NICK_TABLE_CREATE);
+        db.execSQL(TOPIC_USER);
     }
 
     @Override

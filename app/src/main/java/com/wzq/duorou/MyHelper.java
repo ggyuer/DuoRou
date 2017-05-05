@@ -50,6 +50,7 @@ import com.wzq.duorou.beans.InviteMessage;
 import com.wzq.duorou.beans.InviteMessage.InviteMesageStatus;
 import com.wzq.duorou.beans.RobotUser;
 import com.wzq.duorou.beans.TopUser;
+import com.wzq.duorou.beans.TopicUser;
 import com.wzq.duorou.chat.impl.ChatFileDaoImpl;
 import com.wzq.duorou.chat.model.ChatFileDao;
 import com.wzq.duorou.chat.model.GroupNickDao;
@@ -59,6 +60,7 @@ import com.wzq.duorou.chat.parse.UserProfileManager;
 import com.wzq.duorou.chat.receiver.CallReceiver;
 import com.wzq.duorou.chat.view.activity.ChatActivity;
 import com.wzq.duorou.db.DBManager;
+import com.wzq.duorou.db.TopicUserDao;
 import com.wzq.duorou.utils.PreferenceManager;
 
 import java.text.SimpleDateFormat;
@@ -151,6 +153,7 @@ public class MyHelper {
     private MyHelper() {
     }
 
+
     public synchronized static MyHelper getInstance() {
         if (instance == null) {
             instance = new MyHelper();
@@ -194,6 +197,35 @@ public class MyHelper {
             allShowNick = getModel().getAllShowNick();
         }
         return allShowNick;
+    }
+
+
+    private List<TopicUser> topicUsers;
+    TopicUserDao dao = new TopicUserDao();
+
+    public List<TopicUser> getTopicUsers() {
+        if (topicUsers == null) {
+
+            topicUsers = dao.getAll();
+        }
+        return topicUsers;
+    }
+
+    public void setTopicUsers(List<TopicUser> users) {
+        dao.saveTopicUsers(users);
+        if (topicUsers == null){
+            topicUsers = new ArrayList<>();
+            this.topicUsers = users;
+        }
+
+    }
+
+    public void saveTopicUser(TopicUser user) {
+        if (topicUsers == null) {
+            topicUsers = dao.getAll();
+        }
+        topicUsers.add(user);
+        dao.saveTopicUser(user);
     }
 
     /*************
@@ -272,9 +304,9 @@ public class MyHelper {
     }
 
 
-
     /**
      * init helper
+     *
      * @param context application context
      */
     public void init(Context context) {
@@ -906,6 +938,7 @@ public class MyHelper {
     protected void registerMessageListener() {
         messageListener = new EMMessageListener() {
             private BroadcastReceiver broadCastReceiver = null;
+
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
@@ -1008,6 +1041,7 @@ public class MyHelper {
 
     /**
      * 判断是否登录
+     *
      * @return
      */
     public boolean isLoggedIn() {
@@ -1052,6 +1086,7 @@ public class MyHelper {
 
     /**
      * get instance of EaseNotifier
+     *
      * @return
      */
     public EaseNotifier getNotifier() {
@@ -1064,6 +1099,7 @@ public class MyHelper {
 
     /**
      * update contact list
+     *
      * @param aContactList
      */
     public void setContactList(Map<String, EaseUser> aContactList) {
@@ -1087,6 +1123,7 @@ public class MyHelper {
 
     /**
      * get contact list
+     *
      * @return
      */
     public Map<String, EaseUser> getContactList() {
@@ -1101,6 +1138,7 @@ public class MyHelper {
 
     /**
      * set current username
+     *
      * @param username
      */
     public void setCurrentUserName(String username) {
@@ -1131,6 +1169,7 @@ public class MyHelper {
 
     /**
      * update user list to cache and database
+     *
      * @param contactInfoList
      */
     public void updateContactList(List<EaseUser> contactInfoList) {
@@ -1206,6 +1245,7 @@ public class MyHelper {
     /**
      * Get group list from server
      * This method will save the sync state
+     *
      * @throws HyphenateException
      */
     public synchronized void asyncFetchGroupsFromServer(final EMCallBack callback) {

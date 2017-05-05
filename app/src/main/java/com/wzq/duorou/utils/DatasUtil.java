@@ -5,6 +5,7 @@ import com.wzq.duorou.beans.CircleItem;
 import com.wzq.duorou.beans.CommentItem;
 import com.wzq.duorou.beans.FavortItem;
 import com.wzq.duorou.beans.PhotoInfo;
+import com.wzq.duorou.beans.TopicUser;
 import com.wzq.duorou.beans.User;
 
 import java.util.ArrayList;
@@ -18,6 +19,20 @@ import java.util.Random;
  * @date 2015-12-28 下午4:16:21
  */
 public class DatasUtil {
+
+    public static List<TopicUser> getTopicUsers(){
+        List<TopicUser> list = new ArrayList<>();
+        TopicUser user0 = new TopicUser(DatasUtil.HEADIMG[0],"张总","哈哈哈我是车市的");
+        TopicUser user1 = new TopicUser(DatasUtil.HEADIMG[1],"莫爱新","这回事好");
+        TopicUser user2 = new TopicUser(DatasUtil.HEADIMG[2],"jsidh","真搞不明白");
+        //TopicUser user3 = new TopicUser(DatasUtil.HEADIMG[3],"岸芷町蓝","烂漫刷不开吧");
+        list.add(user0);
+        list.add(user1);
+        list.add(user2);
+       // list.add(user3);
+        return list;
+    }
+
     public static final String[] CONTENTS = {"",
             "每一个人，都是独立存在不可复制的个体；都以独特的方式演绎着自己的人生。第一次接触到“萌肉”，还是在大学的青葱岁月；“吉娃娃”打破了以往对植物的认知，也许当时并不懂得什么叫珍惜，就这样把它遗忘在了别处。",
             "富士、凤凰、金星共同的母本是岩莲华Orostachys Iwarenge，也叫青凤凰、玄海岩、玄海岩莲华。它们共同的特征是都隶属景天科瓦松属 (Orostachys)， 叶片匙型或者半圆型(半圆的状态是她们状态最好的时候)，容易萌生侧芽（脑补子持莲华，是的，它们都是近亲），高温和低温都会进入休眠，秋季开花时叶盘向上抽出花序，开花后通常母株会死亡，为了不让植株死亡，可以在开花初期去除花穗。以珍惜度排名是金星、富士、凤凰、岩莲华。\n" +

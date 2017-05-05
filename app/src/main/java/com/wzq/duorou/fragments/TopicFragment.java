@@ -1,6 +1,7 @@
 package com.wzq.duorou.fragments;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,12 +11,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wzq.duorou.R;
+import com.wzq.duorou.activitys.TopicDetailsActivity;
 import com.wzq.duorou.base.BaseFragment;
 import com.wzq.duorou.beans.Topic;
 import com.wzq.duorou.theme.ColorTextView;
@@ -48,6 +51,16 @@ public class TopicFragment extends BaseFragment {
         listView = (PullUpLoadMoreListView) getBaseView().findViewById(R.id.listView);
         adapter = new MyAdapter(getTopic());
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Topic item = (Topic) adapter.getItem(position);
+                Intent intent = TopicDetailsActivity.getInstance(getActivity());
+                intent.putExtra("topicId",item.getId());
+                intent.putExtra("re",item.getReId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

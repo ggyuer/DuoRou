@@ -51,17 +51,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/BrownTheme">
-
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="330013#cangcircle" />
-        <!--<meta-data-->
-        <!--android:name="EASEMOB_APPKEY"-->
-        <!--android:value="easemob-demo#chatdemoui" />  -->
+        <!-- <meta-data -->
+        <!-- android:name="EASEMOB_APPKEY" -->
+        <!-- android:value="easemob-demo#chatdemoui" /> -->
 
-        <!--<meta-data-->
-            <!--android:name="EASEMOB_APPKEY"-->
-            <!--android:value="330013#duorou" />-->
+
+        <!-- <meta-data -->
+        <!-- android:name="EASEMOB_APPKEY" -->
+        <!-- android:value="330013#duorou" /> -->
+
 
         <!-- gilde加载https图片页面 -->
         <meta-data
@@ -92,19 +93,17 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="590c3e6175ca352009001bce" >
-        </meta-data>
-
-
+            android:value="590c3e6175ca352009001bce"></meta-data>
         <meta-data
             android:name="com.wzq.duorou.MyGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name=".share.AuthActivity"
+        <activity
+            android:name=".share.AuthActivity"
             android:configChanges="orientation|keyboard"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
 
         <!-- tencent -->
         <activity
@@ -112,47 +111,47 @@
             android:launchMode="singleTask"
             android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468"/>
+                <data android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.umeng.qq.tencent.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--<activity-->
-        <!--android:name="com.tencent.tauth.AuthActivity"-->
-        <!--android:launchMode="singleTask"-->
-        <!--android:noHistory="true" >-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
+        <!-- <activity -->
+        <!-- android:name="com.tencent.tauth.AuthActivity" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:noHistory="true" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--<category android:name="android.intent.category.BROWSABLE" />-->
 
-        <!--<data android:scheme="tencent100424468" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
-        <!--<activity-->
-        <!--android:name="com.tencent.connect.common.AssistActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-        <!--android:configChanges="orientation|keyboardHidden|screenSize"/>-->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+
+
+        <!-- <data android:scheme="tencent100424468" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="com.tencent.connect.common.AssistActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
+        <!-- android:configChanges="orientation|keyboardHidden|screenSize"/> -->
 
         <activity
             android:name=".share.ShareMenuActivity"
             android:configChanges="orientation|keyboard"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
         <activity
             android:name=".activitys.MainActivity"
             android:screenOrientation="portrait" />
@@ -175,8 +174,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
-
-        <activity android:name=".chat.view.activity.ChatFileActivity"/>
+        <activity android:name=".chat.view.activity.ChatFileActivity" />
         <!-- 群组列表 -->
         <activity
             android:name=".chat.view.activity.GroupsActivity"
@@ -209,31 +207,37 @@
         <activity android:name=".activitys.ImageActivity" />
         <activity android:name=".chat.view.activity.GroupDetailActivity" />
         <activity android:name=".chat.view.activity.SingleDetailActivity" />
-        <activity android:name=".activitys.WikiActivity"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+        <activity android:name=".activitys.WikiActivity" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".chat.view.activity.AllSearchMessageActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".chat.view.activity.AllSearchMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".chat.view.activity.AddContactActivity"
+        <activity
+            android:name=".chat.view.activity.AddContactActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateVisible"
-            />
-        <activity android:name=".chat.view.activity.NewFriendsMsgActivity"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".chat.view.activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"/>
-        <activity android:name=".chat.view.activity.ForwardMessageActivity"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".chat.view.activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".chat.view.activity.PickContactNoCheckboxActivity"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".chat.view.activity.PickContactNoCheckboxActivity" />
+        <activity android:name=".activitys.TopicDetailsActivity"></activity>
     </application>
 
 </manifest>
