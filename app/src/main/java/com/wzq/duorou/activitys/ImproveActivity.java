@@ -138,8 +138,10 @@ public class ImproveActivity extends MyBaseActivity implements View.OnClickListe
                 if (!updatenick) {
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(ImproveActivity.this, getString(R.string.toast_updatenick_fail), Toast.LENGTH_SHORT)
-                                    .show();
+                            PreferenceManager.getInstance().setValueToPrefrences(Constant.USER_NICK_NAME,nickName);
+                            PreferenceManager.getInstance().setIsNeed(1);
+                            Intent intent  = new Intent(ImproveActivity.this,MainActivity.class);
+                            startActivity(intent);
                             dialog.dismiss();
                             pd.dismiss();
                         }

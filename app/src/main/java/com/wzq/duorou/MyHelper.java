@@ -83,6 +83,16 @@ public class MyHelper {
         void onSyncComplete(boolean success);
     }
 
+    private int count = 0;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     protected static final String TAG = "/MyHelper";
 
     private EaseUI easeUI;
