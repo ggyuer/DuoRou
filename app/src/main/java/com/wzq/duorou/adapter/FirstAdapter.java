@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wzq.duorou.MyHelper;
 import com.wzq.duorou.R;
 import com.wzq.duorou.activitys.WebActivity;
 import com.wzq.duorou.beans.Breed;
@@ -63,14 +64,15 @@ public class FirstAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-
+    Holder holder = null;
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        Holder holder = null;
+       // Holder holder = null;
         if (view == null) {
             holder = new Holder();
             view = inflater.inflate(layoutId, null);
             holder.img = (ImageView) view.findViewById(R.id.img);
+            holder.lickImg = (ImageView) view.findViewById(R.id.lickImg);
             holder.title = (ColorTextView) view.findViewById(R.id.title);
             holder.time = (TextView) view.findViewById(R.id.time);
             holder.likeCount = (TextView) view.findViewById(R.id.likeCount);
@@ -78,6 +80,17 @@ public class FirstAdapter extends BaseAdapter {
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
+        }
+        if (position == 0){
+            holder.lickImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int count = ((Breed)getItem(0)).getLikeCount();
+                    count = count+1;
+                    holder.likeCount.setText(count + "");
+                    MyHelper.getInstance().setCount(count);
+                }
+            });
         }
         final Breed breed = breeds.get(position);
         Glide.with(context).load(breed.getImg()).into(holder.img);
@@ -102,6 +115,7 @@ public class FirstAdapter extends BaseAdapter {
 
     class Holder {
         ImageView img;
+        ImageView lickImg;
         ColorTextView title;
         TextView time;
         TextView likeCount;

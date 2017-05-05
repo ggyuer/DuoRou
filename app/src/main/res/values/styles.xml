@@ -7,6 +7,18 @@
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
     </style>
 
+    <style name="VK.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="VKAlertDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
     <style name="groupDetailsLayoutStyle1">
         <item name="android:layout_height">48dp</item>

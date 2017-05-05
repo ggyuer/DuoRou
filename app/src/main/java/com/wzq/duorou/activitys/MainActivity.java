@@ -110,7 +110,6 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     TextView mTheme;
     @Bind(R.id.menu)
     ColorRelativeLayout mMenu;
-    @Bind(R.id.status_bar)
     ColorView mStatusBar;
     @Bind(R.id.icon)
     ImageView mIcon;
@@ -191,6 +190,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         fragmentManager = getSupportFragmentManager();
         contactListFragment = new ContactListFragment();
         conversationListFragment = new ConversationListFragment();
+        mStatusBar = (ColorView)findViewById(R.id.status_bar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mStatusBar.setVisibility(View.VISIBLE);
             mStatusBar.getLayoutParams().height = SystemUtils.getStatusHeight(this);

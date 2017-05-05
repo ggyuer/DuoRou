@@ -87,17 +87,17 @@
 		<!--底部部分-->
 		<footer class="foot">
 			<div class="weui_tabbar">
-				<a href="javascript:;" class="weui_tabbar_item weui_tabbar_item_1">
+				<a href="javascript:;" id="first" class="weui_tabbar_item weui_tabbar_item_1">
 					<div class="weui_tabbar_icon">
 						<img src="img/comment.png" style="display: block;">
 					</div>
 				</a>
-				<a href="javascript:;" class="weui_tabbar_item">
+				<a href="javascript:;" id="like" class="weui_tabbar_item">
 					<div class="weui_tabbar_icon">
 						<img src="img/like.png" style="display: block;">
 					</div>
 				</a>
-				<a href="javascript:;" class="weui_tabbar_item">
+				<a href="javascript:;" id="center" class="weui_tabbar_item">
 					<p class="weui_tabbar_label huomiao">
 					</p>
 					<div class="weui_tabbar_icon weui_tabbar_icon_a">
@@ -105,12 +105,12 @@
 					</div>
 					
 				</a>
-				<a href="javascript:;" class="weui_tabbar_item">
+				<a href="javascript:;"  id="forward" class="weui_tabbar_item">
 					<div class="weui_tabbar_icon">
 						<img src="img/forward.png" style="display: block;">
 					</div>
 				</a>
-				<a href="javascript:;" class="weui_tabbar_item">
+				<a href="javascript:;" id="share" class="weui_tabbar_item">
 					<div class="weui_tabbar_icon">
 						<img src="img/share.png" style="display: block;">
 					</div>
@@ -125,24 +125,95 @@
 		
 		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
 		<script type="text/javascript">
-			$(window).scroll(function() {
-	var sc = $(window).scrollTop();
-	if(sc > 100) {
-		$(".return_top").css("display", "block");
- $(".foot").css("display", "block");
-	} else {
-		$(".return_top").css("display", "none");
-		$(".foot").css("display", "none");
-		
-	}
-})
-$(".return_top").click(function() {
-	var sc = $(window).scrollTop();
-	$('body,html').animate({
-		scrollTop: 0
-	}, 500);
+	 $(window).scroll(function() {
+			var sc = $(window).scrollTop();
+			if(sc > 100) {
+				$(".return_top").css("display", "block");
+		    $(".foot").css("display", "block");
+			 } else {
+				$(".return_top").css("display", "none");
+				$(".foot").css("display", "none");
 
-})
+			}
+		 })
+		 $(".return_top").click(function() {
+			var sc = $(window).scrollTop();
+			$('body,html').animate({
+				scrollTop: 0
+			}, 500);
+
+         })
+
+
 		</script>
 	</body>
+<script>
+
+  function connectWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+            } else {
+                document.addEventListener(
+                    'WebViewJavascriptBridgeReady'
+                    , function() {
+                        callback(WebViewJavascriptBridge)
+                    },
+                    false
+                );
+            }
+        }
+
+     connectWebViewJavascriptBridge(function(bridge) {
+            bridge.init(function(message, responseCallback) {
+                <!--console.log('JS got a message', message);-->
+                <!--var data = {-->
+                    <!--'Javascript Responds': '测试中文!'-->
+                <!--};-->
+                <!--console.log('JS responding with', data);-->
+                <!--responseCallback(data);-->
+            });
+
+        })
+
+         $("#share").click(function() {
+            window.WebViewJavascriptBridge.callHandler(
+                'share'
+                , {'type': '1'}
+                , function(responseData) {
+                }
+            );
+         })
+         $("#like").click(function() {
+            window.WebViewJavascriptBridge.callHandler(
+                'share'
+                , {'type': '2'}
+                , function(responseData) {
+                }
+            );
+         })
+         $("#forward").click(function() {
+            window.WebViewJavascriptBridge.callHandler(
+                'forward'
+                , {'type': '3'}
+                , function(responseData) {
+                }
+            );
+         })
+          $("#center").click(function() {
+            window.WebViewJavascriptBridge.callHandler(
+                'forward'
+                , {'type': '4'}
+                , function(responseData) {
+                }
+            );
+         })
+          $("#first").click(function() {
+            window.WebViewJavascriptBridge.callHandler(
+                'first'
+                , {'type': '5'}
+                , function(responseData) {
+                }
+            );
+         })
+</script>
 </html>

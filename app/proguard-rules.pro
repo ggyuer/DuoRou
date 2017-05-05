@@ -23,7 +23,7 @@
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**
 #混淆Gilde加载https图片
--keep class com.confolsc.guoshi.service.OkHttpGlideModule
+-keep class com.wzq.duorou.net.OkHttpGlideModule
 
 -dontwarn okhttp3.**
 -keep class okhttp3.**{*;}
