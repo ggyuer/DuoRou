@@ -1,16 +1,19 @@
 package com.wzq.duorou.fragments;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.wzq.duorou.R;
+import com.wzq.duorou.activitys.WebActivity;
 import com.wzq.duorou.base.BaseFragment;
 import com.wzq.duorou.beans.Wiki;
 import com.wzq.duorou.widget.PushGridView;
@@ -40,6 +43,16 @@ public class WikiFragment extends BaseFragment {
         gridView = (PushGridView)getBaseView().findViewById(R.id.gridView);
         adapter = new GAdapter();
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showToast("a");
+                Intent intent = WebActivity.getInstance(getActivity());
+                intent.putExtra("title","百科");
+                intent.putExtra("url","file:///android_asset/wiki0.html");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

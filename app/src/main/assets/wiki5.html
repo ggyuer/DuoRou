@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>首页</title>
+		
+		<style type="text/css">
+			* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 12px;
+}
+html,
+body {
+	font-family: PingFang-SC-Regular, Helvetica Neue, Helvetica, microsoft yahei, sans-serif;
+	color: #555;
+	overflow: -Scroll;
+	overflow-x: hidden;
+	background-color: #efeff3;
+
+}
+.body {
+    width: 100%;
+}
+.body img{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.body_text{
+	position: absolute;
+	bottom: 15px;
+	right: 30px;
+	font-size: 25px;
+	color: white;
+	
+}
+
+.body_text1{
+	color: white;
+	position: absolute;
+	right: 30px;
+	top: 10px;
+	font-size: 25px;
+}
+.body_text2{
+	/*margin-bottom: 0px;*/
+	color: white;
+	width: 100%;
+	height: 90%;
+	background-color: transparent;
+	position: fixed;bottom: 0px;left: 0px;z-index: 999;
+}
+.a{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 1px solid ghostwhite;
+	padding-left: 10px;
+}
+.b,.c{
+	height: 60px;
+	border-bottom: 1px solid ghostwhite;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+.c{
+	height: 90px !important;
+}
+.c div{
+	margin-top: 10px;
+}
+.c img{
+	width: 50px;
+}
+.d .d1{
+	width: 90%;
+	height: 60px;
+	border-bottom: 1px solid ghostwhite;
+	margin: 10px auto;
+}
+.d1 div{
+	margin-top: 10px;
+	width: 50%;
+	float: left;
+	text-align: center;
+	line-height: 20px;
+}
+.d1 img{
+	width: 20px;
+	}
+/*结束*/
+
+
+
+		</style>
+	</head>
+
+	<body>
+		<div class="body">
+           <img src="img/bg.png">
+           <div class="body_text">山地玫瑰</div>
+        </div>
+        <div class="body_a" style="display: none;">
+        	 <div class="body_text1">山地玫瑰</div>
+        	<div class="body_text2" style="background-color: rgba(255,255,255,0.3)">
+        		<div class="a">景天科      <span>莲花掌属。原本独立为山地玫瑰属，后被归并为莲花掌属。</span></div>
+        		<div class="b">简介  
+        			<div>山地玫瑰是一种很美丽的多肉植物，如同它的名字一样，山地里生长的玫瑰一般的植物，很多家庭因其独特的外形而选择养殖它，那么我们也一起认识一下它吧。</div>
+        		</div>
+        		<div class="c">图集 
+        			<div><img src="img/2.jpg"></div>
+        		</div>
+        		<div class="d">
+        			<div class="d1">
+        				<div>浇水<br/>
+        					<img src="img/水滴 (1).png">
+        					<img src="img/水滴 (1).png">
+        					<img src="img/水滴 (1).png">
+        	
+        					
+    			
+        				</div>
+        				<div>日照
+        					<br/>
+        					<img src="img/太阳.png">
+        					<img src="img/太阳.png">
+        					<img src="img/太阳.png">
+        					<img src="img/太阳.png">
+        			
+        				</div>
+        			</div>
+        			<div class="d1">
+        				<div>繁殖<br/>
+        					无
+        				</div>
+        				<div>参考价格<br/>
+        				101
+        				</div>
+        			</div>
+        			<div class="d1">
+        				<div>生长季<br/>
+        					冬季型
+        				</div>
+        				<div>种植难度<br/>
+        					容易
+        				</div>
+        			</div>
+        			
+        		</div>
+        	</div>
+        </div>
+        <script type="text/javascript" src="js/jquery-2.1.4.js" ></script>
+        <script type="text/javascript">
+        		 $(document).ready(function(){
+        $(".body_text").click(function(){
+            $(".body_a").slideToggle(2000);
+            $(".body_text").css('display','none');
+        });
+         $(".body_text1").click(function(){
+            $(".body_a").css('display','none');
+             $(".body_text").css('display','block');
+            
+        });
+    });
+        </script>
+	</body>
+
+</html>
