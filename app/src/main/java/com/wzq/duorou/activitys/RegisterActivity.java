@@ -13,13 +13,6 @@
  */
 package com.wzq.duorou.activitys;
 
-import com.hyphenate.EMError;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
-import com.wzq.duorou.MyHelper;
-import com.wzq.duorou.R;
-import com.wzq.duorou.base.BaseActivity;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,9 +20,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
+import com.wzq.duorou.MyHelper;
+import com.wzq.duorou.R;
+import com.wzq.duorou.base.BaseActivity;
+
 /**
  * register screen
- *
  */
 public class RegisterActivity extends BaseActivity {
     private EditText userNameEditText;
