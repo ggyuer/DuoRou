@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.wzq.duorou.R;
 import com.wzq.duorou.activitys.WebActivity;
 import com.wzq.duorou.base.BaseFragment;
@@ -46,10 +47,9 @@ public class WikiFragment extends BaseFragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showToast("a");
                 Intent intent = WebActivity.getInstance(getActivity());
-                intent.putExtra("title","百科");
-                intent.putExtra("url","file:///android_asset/wiki0.html");
+                intent.putExtra("title","多肉百科");
+                intent.putExtra("url",adapter.getItem(position).getLocal());
                 startActivity(intent);
             }
         });
@@ -69,7 +69,7 @@ public class WikiFragment extends BaseFragment {
         }
 
         @Override
-        public Object getItem(int position) {
+        public Wiki getItem(int position) {
             return getWikis().get(position);
         }
 
@@ -88,16 +88,19 @@ public class WikiFragment extends BaseFragment {
             }else {
                 holder = (Holder) view.getTag();
             }
-
-            Glide.with(getActivity()).load(getWikis().get(position).getUrl()).into(holder.image);
+            holder.tv_content.setText(getItem(position).getTitle());
+            Glide.with(getActivity()).load(getItem(position).getUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.image);
             return view;
         }
     }
 
     class Holder{
         ImageView image;
+        TextView tv_content;
         public Holder(View view){
             image = (ImageView) view.findViewById(R.id.image);
+            tv_content = (TextView) view.findViewById(R.id.tv_content);
         }
     }
 
@@ -105,19 +108,16 @@ public class WikiFragment extends BaseFragment {
 
         List<Wiki> wikis = new ArrayList<>();
 
-        Wiki wiki = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki1 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki2 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki3 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki4 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki5 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki6 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki7 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki8 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki9 = new Wiki(0,"yuyu",urls[0]);
-        Wiki wiki10 = new Wiki(0,"yuyu",urls[0]);
+        Wiki wiki0 = new Wiki(0,"玉翁(Mammillaria hahniana)",urls[0],"file:///android_asset/wiki0.html");
+        Wiki wiki1 = new Wiki(1,"空蝉(Utsusemi)",urls[1],"file:///android_asset/wiki1.html");
+        Wiki wiki2 = new Wiki(2,"爱之蔓(RosaryVine)",urls[2],"file:///android_asset/wiki2.html");
+        Wiki wiki3 = new Wiki(3,"钱串(Crassula perforata)",urls[3],"file:///android_asset/wiki3.html");
+        Wiki wiki4 = new Wiki(4,"千羽鹤(Echeveria peacockii)",urls[4],"file:///android_asset/wiki4.html");
+        Wiki wiki5 = new Wiki(5,"山地玫瑰(Greenovia Webb)",urls[5],"file:///android_asset/wiki5.html");
+        Wiki wiki6 = new Wiki(6,"星美人(Pachyphytum oviferum)",urls[6],"file:///android_asset/wiki6.html");
+        Wiki wiki7 = new Wiki(7,"昙花(Epiphyllum oxypetalum)",urls[7],"file:///android_asset/wiki7.html");
 
-        wikis.add(wiki);
+        wikis.add(wiki0);
         wikis.add(wiki1);
         wikis.add(wiki2);
         wikis.add(wiki3);
@@ -125,14 +125,18 @@ public class WikiFragment extends BaseFragment {
         wikis.add(wiki5);
         wikis.add(wiki6);
         wikis.add(wiki7);
-        wikis.add(wiki8);
-        wikis.add(wiki9);
-        wikis.add(wiki10);
 
         return wikis;
     }
 
     public String[] urls = {
-      "http://onqmk81ra.bkt.clouddn.com/ll.jpg!new"
+           "http://onqmk81ra.bkt.clouddn.com/wiki0000.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0001.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0002.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0003.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0004.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0005.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0006.jpg!new",
+           "http://onqmk81ra.bkt.clouddn.com/wiki0007.jpg!new"
     };
 }

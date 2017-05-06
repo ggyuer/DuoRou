@@ -9,11 +9,21 @@ public class Wiki {
     private int id;
     private String title;
     private String url;
+    private String local;
 
-    public Wiki(int id, String title, String url) {
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public Wiki(int id, String title, String url,String local) {
         this.id = id;
         this.title = title;
         this.url = url;
+        this.local = local;
     }
 
     public String getUrl() {
